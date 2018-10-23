@@ -1,23 +1,53 @@
+# Importe für das Projekt
+# Flask als Framework für das Pythonprojekt
 from flask import Flask, render_template, redirect, url_for
+
+# SQLAlchemy für die Verbindung zur Datenbank
 from flask_sqlalchemy import SQLAlchemy
-from data import Articles
+
+# Forms für Flask
 from flask_wtf import FlaskForm
-from wtforms import  StringField, PasswordField, BooleanField
+
+# Spezielle Felder für die Forms
+from wtforms import StringField, PasswordField, BooleanField
+
+# Validators sind Kriterien die die einzelnen Felder ueberpruefen
 from wtforms.validators import  InputRequired, Email, Length
+
+# Flask Bootstrap implementiert Bootstrap Variablen für das Projekt
 from flask_bootstrap import Bootstrap
+
+# Zur Verschluesselung des Passworts gibt es von Python3 vorgefertigte Variablen - sha256
 from werkzeug.security import generate_password_hash, check_password_hash
+
+# Vorgefertigte Variablen für Flask, um den Loginprozess programmiertechnisch einfacher zu gestalten
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
+# Testimport für die Seite Artikel
+from data import Articles
 
 
+# Initialisierung des Flask Projekts
 app = Flask(__name__)
+
+# Bevor man eine Datenbank ansprechen kann, muss ein Secret Key gesetzt werden - Kann nicht ausgesetzt werden
 app.config['SECRET_KEY'] = 'HalloWelt'
+
+# Adresse der SQLite Datenbank - Auf die Zeichenfolge muss geachtet werden
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\Max\\PycharmProjects\\untitled1\\templates\\database\\database.db'
+
+# Initialisierung der Datenbank
 db = SQLAlchemy(app)
+
+# Verknuepfung von Bootstrap zu der App ...
 Bootstrap(app)
+
+# Aufruf des LoginManagers
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# Für Seite: Artikel
 Articles = Articles()
 
 '''
@@ -30,6 +60,10 @@ class Config(object):
 '''
 
 #Routing für die einzelnen Seiten
+@app.route('/')
+def index():
+    return render_template('home.html')
+
 @app.route('/home')
 def home():
    return render_template('home.html')
@@ -91,6 +125,8 @@ def logout():
     #flash('You are now logged out', 'success')
     return redirect('home')
 
+
+#Aufbau der Datenbank bzw. Tabelle User
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
@@ -101,16 +137,18 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Felder für die LoginSeite
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('remember me')
 
+# Felder für die RegisterSeite
 class RegisterForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
 
-
+# Start der Applikation im Debugmodus (Seite muss nicht bei jeder Aenderung neu gestartet werden - geschieht dann automatisch)
 if __name__ == '__main__':
     app.run(debug=True)
