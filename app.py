@@ -1,6 +1,6 @@
 # Importe für das Projekt
 # Flask als Framework für das Pythonprojekt
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request, flash
 
 # SQLAlchemy für die Verbindung zur Datenbank
 from flask_sqlalchemy import SQLAlchemy
@@ -85,6 +85,24 @@ def article(id):
 def dashboard():
     return render_template('dashboard.html', name=current_user.username)
 
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    form = SettingsForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+
+        # Flash ist noch nicht richtig implementiert!
+        #flash('your account hast been updated!', 'success')
+
+        return redirect(url_for('settings'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    return render_template('settings.html', form=form)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -148,6 +166,11 @@ class RegisterForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+
+class SettingsForm(FlaskForm):
+    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
+    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+
 
 # Start der Applikation im Debugmodus (Seite muss nicht bei jeder Aenderung neu gestartet werden - geschieht dann automatisch)
 if __name__ == '__main__':
