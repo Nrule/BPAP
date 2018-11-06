@@ -103,6 +103,23 @@ def settings():
         form.email.data = current_user.email
     return render_template('settings.html', form=form)
 
+@app.route('/comparison', methods=['GET', 'POST'])
+@login_required
+def comparison():
+    form = ComparisonForm()
+    player_one = '{{ name }}' #Vorausgesetzt er nimmt den selben Namen wie bei PUBG
+    player_two = 'Herbert'
+    player_one_stats = {}
+    player_two_stats = {}
+
+    if request.method == 'POST':
+        print(request.form.get('playerName'))
+
+        #player_one = request.form.get('playerName')
+
+    return render_template('comparison.html', form=form, name=current_user.username, player_one=player_one,
+                           player_two=player_two, player_one_stats=player_one_stats, player_two_stats=player_two_stats)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -170,6 +187,9 @@ class RegisterForm(FlaskForm):
 class SettingsForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+
+class ComparisonForm(FlaskForm):
+    name = StringField('name', validators=[InputRequired(), Length(min=4, max=20)])
 
 
 # Start der Applikation im Debugmodus (Seite muss nicht bei jeder Aenderung neu gestartet werden - geschieht dann automatisch)
