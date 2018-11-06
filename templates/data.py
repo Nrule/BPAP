@@ -1,3 +1,4 @@
+# Herangehensweise nach dem Python-PUBG-Wrapper
 # Quelle//
 # https://github.com/ramonsaraiva/pubg-python
 
@@ -5,38 +6,24 @@
 from pubg_python import PUBG, Shard
 
 # Aufruf des API-Keys und Auswahl des entsprechenden Shards (wie z.B. PC_EU oder PC_NA)
-api = PUBG ('API-KEY', Shard.PC_EU)
+api = PUBG ('api-key', Shard.PC_NA)
 
 
-# A sample of matches can be retrieved as a starting point
-sample = api.samples().get()
-for match in sample.matches:
-    print(match.id)
+players = api.players().get('account.d50fdc18fcad49c691d38466bed6f8fd')
+player = players
+#print("Accountname: ", (players), sep=' ')
+#print("Accountid: ", players.name, sep=' ')
 
-
-# Samples can also be filtered by a creation date
-sample = api.samples().filter(created_at_start='2018-01-01T00:00:00Z').get()
-for match in sample.matches:
-    print(match.id)
-
-
-# Retrieving a single player
-player = api.players().get('account.3654e255b77b409e87b10dcb086ab00d')
-
-for match in player.matches:
+for idx, match in enumerate(player.matches):
     match_data = api.matches().get(match.id)
 
+    match = api.matches().get(player.matches[0].id)
+    match.rosters
+    roster = match.rosters[0]
+    roster.participants
+    participant = roster.participants[0]
+    participant.name
+    print(participant.name)
 
-# Retrieving a list of players filtering by names
-players = api.players().filter(player_names=['Name1', 'Name2'])
 
-for player in players:
-    player_id = player.id
-
-
-# Retrieving a list of players filtering by ids
-players = api.players().filter(player_ids=['account.3654e255b77b409e87b10dcb086ab00d'])
-
-for player in players:
-    player_name = player.name
-
+    print(idx, players, players.name, match_data, sep= ' ')
