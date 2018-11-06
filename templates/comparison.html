@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block body %}
+
+<form class="form-comparison" method="POST" action="/comparison">
+
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4">Spielervergleich!</h1>
+          <p class="lead my-3">Vergleich von zwei PUBG-Spielern</p>
+        </div>
+      </div>
+
+   <div class="container">
+<div class="input-group mb-2">
+  <input name="playerName" type="text" class="form-control" placeholder="Spielername" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-primary" type="button" id="button-addon2">Suchen</button>
+  </div>
+</div>
+
+    <div class="input-group mb-2">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Server</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect01">
+    <option selected>Choose...</option>
+    <option value="xbox-as">Asia-XBOX</option>
+    <option value="xbox-eu">Europe-XBOX</option>
+    <option value="xbox-na">North America-XBOX</option>
+    <option value="xbox-oc">Oceania-XBOX</option>
+    <option value="xbox-sa">South America-XBOX</option>
+    <option value="pc-krjp">Korea</option>
+    <option value="pc-jp">Japan</option>
+    <option value="pc-na">North America</option>
+    <option value="pc-eu">Europe</option>
+    <option value="pc-ru">Russia</option>
+    <option value="pc-oc">Oceania</option>
+    <option value="pc-kakao">Kakao</option>
+    <option value="pc-sea">South East Asia</option>
+    <option value="pc-sa">South and Central America</option>
+    <option value="pc-as">Asia</option>
+    <option value="pc-tournament">Tournaments</option>
+    <option value="steam">Steam Platform</option>
+    <option value="kakao">Kakao Platform</option>
+  </select>
+</div>
+
+       <div class="input-group mb-2">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect02">Teamgröße</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect02">
+    <option selected>Choose...</option>
+    <option value="solo">Solo</option>
+    <option value="duo">Duo</option>
+      <option value="squat">Squat</option>
+  </select>
+       </div>
+
+   <div class="input-group mb-2">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect03">Ansicht</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect03">
+    <option selected>Choose...</option>
+    <option value="fpp">First-Person</option>
+      <option value="tpp">Third-Person</option>
+  </select>
+   </div>
+
+
+</div>
+</form>
+
+<div class="container">
+    <div class="row">
+        {% if player_one %}
+  <div class="col-sm-6">
+    <div class="card">
+        <div class="card-header">
+            <h5>{{name}}</h5>
+        </div>
+        <div class="card-body">
+            <p class="subtitle">Wins: {{ player_one_stats ['wins']}}</p>
+            <p class="subtitle">Matches: {{ player_one_stats ['matches']}}</p>
+            <p class="subtitle">Kills: {{ player_one_stats ['kills']}}</p>
+      </div>
+  </div>
+  </div>
+        {% endif %}
+        {% if player_two %}
+  <div class="col-sm-6">
+    <div class="card">
+        <div class="card-header">
+            <h5>{{ player_two }}</h5>
+        </div>
+      <div class="card-body">
+            <p class="subtitle">Wins: {{ player_two_stats ['wins']}}</p>
+            <p class="subtitle">Matches: {{ player_two_stats ['matches']}}</p>
+            <p class="subtitle">Kills: {{ player_two_stats ['kills']}}</p>
+      </div>
+        {% endif %}
+    </div>
+  </div>
+
+    </div>
+</div>
+{% endblock %}
