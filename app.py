@@ -23,9 +23,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Vorgefertigte Variablen für Flask, um den Loginprozess programmiertechnisch einfacher zu gestalten
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
+from chicken_dinner.pubgapi import PUBG
+
 # Testimport für die Seite Artikel
 from data import Articles
-
 
 # Initialisierung des Flask Projekts
 app = Flask(__name__)
@@ -106,19 +107,27 @@ def settings():
 @app.route('/comparison', methods=['GET', 'POST'])
 @login_required
 def comparison():
-    form = ComparisonForm()
-    player_one = '{{ name }}' #Vorausgesetzt er nimmt den selben Namen wie bei PUBG
-    player_two = 'Herbert'
+
+    player_one = None
+    player_two = None
     player_one_stats = {}
     player_two_stats = {}
 
     if request.method == 'POST':
-        print(request.form.get('playerName'))
+        player_one = request.form.get('playerOneName')
 
-        #player_one = request.form.get('playerName')
+        if player_one:
+            player_two = request.form.get('playerName')
+        else:
+            player_one = request.form.get('playerName')
 
-    return render_template('comparison.html', form=form, name=current_user.username, player_one=player_one,
-                           player_two=player_two, player_one_stats=player_one_stats, player_two_stats=player_two_stats)
+        player_one_stats = Player_stats(player_one)
+
+        if player_two:
+            player_two_stats = Player_stats(player_two)
+
+    return render_template('comparison.html', player_one=player_one, player_two=player_two, player_one_stats=player_one_stats, player_two_stats=player_two_stats)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -174,23 +183,66 @@ def load_user(user_id):
 
 # Felder für die LoginSeite
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField('remember me')
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
+    password = PasswordField('Passwort', validators=[InputRequired(), Length(min=8, max=80)])
+    remember = BooleanField('Remember me')
 
 # Felder für die RegisterSeite
 class RegisterForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    password = PasswordField('Passwort', validators=[InputRequired(), Length(min=8, max=80)])
 
 class SettingsForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
 
-class ComparisonForm(FlaskForm):
-    name = StringField('name', validators=[InputRequired(), Length(min=4, max=20)])
 
+def Player_stats(playername):
+    # API-KEY
+    api_key = "API-KEY"
+    # (server) beschreibt, von wo den Daten bezogen werden sollen
+    pubg = PUBG(api_key, "pc-eu")
+    shroud = pubg.players_from_names(playername)[0]
+    shroud_season = shroud.get_current_season()
+    squad_fpp_stats = shroud_season.game_mode_stats("squad", "fpp")
+
+    temporary_dict = {}
+    temporary_dict['wins'] = squad_fpp_stats['wins']
+    temporary_dict['kills'] = squad_fpp_stats['kills']
+    temporary_dict['assists'] = squad_fpp_stats['assists']
+    temporary_dict['best_rank_point'] = squad_fpp_stats['best_rank_point']
+    temporary_dict['boosts'] = squad_fpp_stats['boosts']
+    temporary_dict['dbnos'] = squad_fpp_stats['dbnos']
+    temporary_dict['daily_kills'] = squad_fpp_stats['daily_kills']
+    temporary_dict['daily_wins'] = squad_fpp_stats['daily_wins']
+    temporary_dict['damage_dealt'] = squad_fpp_stats['damage_dealt']
+    temporary_dict['days'] = squad_fpp_stats['days']
+    temporary_dict['headshot_kills'] = squad_fpp_stats['headshot_kills']
+    temporary_dict['kill_points'] = squad_fpp_stats['kill_points']
+    temporary_dict['longest_kill'] = squad_fpp_stats['longest_kill']
+    temporary_dict['longest_time_survived'] = squad_fpp_stats['longest_time_survived']
+    temporary_dict['losses'] = squad_fpp_stats['losses']
+    temporary_dict['max_kill_streaks'] = squad_fpp_stats['max_kill_streaks']
+    temporary_dict['most_survival_time'] = squad_fpp_stats['most_survival_time']
+    temporary_dict['rank_points'] = squad_fpp_stats['rank_points']
+    temporary_dict['revives'] = squad_fpp_stats['revives']
+    temporary_dict['ride_distance'] = squad_fpp_stats['ride_distance']
+    temporary_dict['road_kills'] = squad_fpp_stats['road_kills']
+    temporary_dict['round_most_kills'] = squad_fpp_stats['round_most_kills']
+    temporary_dict['rounds_played'] = squad_fpp_stats['rounds_played']
+    temporary_dict['suicides'] = squad_fpp_stats['suicides']
+    temporary_dict['swim_distance'] = squad_fpp_stats['swim_distance']
+    temporary_dict['team_kills'] = squad_fpp_stats['team_kills']
+    temporary_dict['time_survived'] = squad_fpp_stats['time_survived']
+    temporary_dict['top_10s'] = squad_fpp_stats['top_10s']
+    temporary_dict['vehicle_destroys'] = squad_fpp_stats['vehicle_destroys']
+    temporary_dict['walk_distance'] = squad_fpp_stats['walk_distance']
+    temporary_dict['weapons_acquired'] = squad_fpp_stats['weapons_acquired']
+    temporary_dict['weekly_kills'] = squad_fpp_stats['weekly_kills']
+    temporary_dict['weekly_wins'] = squad_fpp_stats['weekly_wins']
+    temporary_dict['win_points'] = squad_fpp_stats['win_points']
+    return temporary_dict
 
 # Start der Applikation im Debugmodus (Seite muss nicht bei jeder Aenderung neu gestartet werden - geschieht dann automatisch)
 if __name__ == '__main__':

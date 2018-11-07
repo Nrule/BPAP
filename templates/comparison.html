@@ -3,8 +3,6 @@
 
 {% block body %}
 
-<form class="form-comparison" method="POST" action="/comparison">
-
     <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
           <h1 class="display-4">Spielervergleich!</h1>
@@ -12,94 +10,115 @@
         </div>
       </div>
 
-   <div class="container">
-<div class="input-group mb-2">
-  <input name="playerName" type="text" class="form-control" placeholder="Spielername" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-primary" type="button" id="button-addon2">Suchen</button>
-  </div>
+
+<section class="section">
+    <div class="container">
+        <form method="POST" action="/comparison">
+<div class="field is-grouped">
+  <p class="control is-expanded">
+    <input type="hidden" name="playerOneName" value="{% if player_one %}{{ player_one }}{% endif %}">
+    <input class="form-control" name="playerName" type="text" placeholder="Player Name">
+  </p>
+  <p class="control">
+    <button class="btn btn-outline-primary">
+      Search
+    </button>
+  </p>
 </div>
-
-    <div class="input-group mb-2">
-  <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect01">Server</label>
-  </div>
-  <select class="custom-select" id="inputGroupSelect01">
-    <option selected>Choose...</option>
-    <option value="xbox-as">Asia-XBOX</option>
-    <option value="xbox-eu">Europe-XBOX</option>
-    <option value="xbox-na">North America-XBOX</option>
-    <option value="xbox-oc">Oceania-XBOX</option>
-    <option value="xbox-sa">South America-XBOX</option>
-    <option value="pc-krjp">Korea</option>
-    <option value="pc-jp">Japan</option>
-    <option value="pc-na">North America</option>
-    <option value="pc-eu">Europe</option>
-    <option value="pc-ru">Russia</option>
-    <option value="pc-oc">Oceania</option>
-    <option value="pc-kakao">Kakao</option>
-    <option value="pc-sea">South East Asia</option>
-    <option value="pc-sa">South and Central America</option>
-    <option value="pc-as">Asia</option>
-    <option value="pc-tournament">Tournaments</option>
-    <option value="steam">Steam Platform</option>
-    <option value="kakao">Kakao Platform</option>
-  </select>
-</div>
-
-       <div class="input-group mb-2">
-  <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect02">Teamgröße</label>
-  </div>
-  <select class="custom-select" id="inputGroupSelect02">
-    <option selected>Choose...</option>
-    <option value="solo">Solo</option>
-    <option value="duo">Duo</option>
-      <option value="squat">Squat</option>
-  </select>
-       </div>
-
-   <div class="input-group mb-2">
-  <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect03">Ansicht</label>
-  </div>
-  <select class="custom-select" id="inputGroupSelect03">
-    <option selected>Choose...</option>
-    <option value="fpp">First-Person</option>
-      <option value="tpp">Third-Person</option>
-  </select>
-   </div>
+    </form>
+    </div>
+</section>
 
 
-</div>
-</form>
 
 <div class="container">
     <div class="row">
         {% if player_one %}
   <div class="col-sm-6">
-    <div class="card">
+    <div class="card text-white bg-info mb-3">
         <div class="card-header">
-            <h5>{{name}}</h5>
+            <h5>{{ player_one }}</h5>
         </div>
         <div class="card-body">
             <p class="subtitle">Wins: {{ player_one_stats ['wins']}}</p>
-            <p class="subtitle">Matches: {{ player_one_stats ['matches']}}</p>
+            <p class="subtitle">Matches: {{ player_one_stats ['rounds_played']}}</p>
             <p class="subtitle">Kills: {{ player_one_stats ['kills']}}</p>
+            <p class="subtitle">Assists: {{ player_one_stats ['assists']}}</p>
+            <p class="subtitle">Best_Rank_Point: {{ player_one_stats ['best_rank_point']}}</p>
+            <p class="subtitle">Boosts: {{ player_one_stats ['boosts']}}</p>
+            <p class="subtitle">Dbnos: {{ player_one_stats ['dbnos']}}</p>
+            <p class="subtitle">Daily_kills: {{ player_one_stats ['daily_kills']}}</p>
+            <p class="subtitle">Daily_wins: {{ player_one_stats ['daily_wins']}}</p>
+            <p class="subtitle">Damage_dealt: {{ player_one_stats ['damage_dealt']}}</p>
+            <p class="subtitle">Days: {{ player_one_stats ['days']}}</p>
+            <p class="subtitle">Headshot_Kills: {{ player_one_stats ['headshot_kills']}}</p>
+            <p class="subtitle">Kill_points: {{ player_one_stats ['kill_points']}}</p>
+            <p class="subtitle">Longest_kill: {{ player_one_stats ['longest_kill']}}</p>
+            <p class="subtitle">Longest_time_survived: {{ player_one_stats ['longest_time_survived']}}</p>
+            <p class="subtitle">Losses: {{ player_one_stats ['losses']}}</p>
+            <p class="subtitle">Max_kill_streaks: {{ player_one_stats ['max_kill_streaks']}}</p>
+            <p class="subtitle">Most_survival_time: {{ player_one_stats ['most_survival_time']}}</p>
+            <p class="subtitle">Rank_points: {{ player_one_stats ['rank_points']}}</p>
+            <p class="subtitle">Revives: {{ player_one_stats ['revives']}}</p>
+            <p class="subtitle">Ride_distance: {{ player_one_stats ['ride_distance']}}</p>
+            <p class="subtitle">Road_kills: {{ player_one_stats ['road_kills']}}</p>
+            <p class="subtitle">Round_most_kills: {{ player_one_stats ['round_most_kills']}}</p>
+            <p class="subtitle">Suicides: {{ player_one_stats ['suicides']}}</p>
+            <p class="subtitle">Swim_distance: {{ player_one_stats ['swim_distance']}}</p>
+            <p class="subtitle">Team_kills: {{ player_one_stats ['team_kills']}}</p>
+            <p class="subtitle">Time_survived: {{ player_one_stats ['time_survived']}}</p>
+            <p class="subtitle">Top_10s: {{ player_one_stats ['top_10s']}}</p>
+            <p class="subtitle">Vehicle_destroys: {{ player_one_stats ['vehicle_destroys']}}</p>
+            <p class="subtitle">Walk_distance: {{ player_one_stats ['walk_distance']}}</p>
+            <p class="subtitle">Weapons_acquired: {{ player_one_stats ['weapons_acquired']}}</p>
+            <p class="subtitle">Weekly_kills: {{ player_one_stats ['weekly_kills']}}</p>
+            <p class="subtitle">Weekly_wins: {{ player_one_stats ['weekly_wins']}}</p>
+            <p class="subtitle">Win_points: {{ player_one_stats ['win_points']}}</p>
       </div>
   </div>
   </div>
         {% endif %}
         {% if player_two %}
   <div class="col-sm-6">
-    <div class="card">
+    <div class="card text-white bg-warning mb-3">
         <div class="card-header">
             <h5>{{ player_two }}</h5>
         </div>
       <div class="card-body">
             <p class="subtitle">Wins: {{ player_two_stats ['wins']}}</p>
-            <p class="subtitle">Matches: {{ player_two_stats ['matches']}}</p>
+            <p class="subtitle">Matches: {{ player_two_stats ['rounds_played']}}</p>
             <p class="subtitle">Kills: {{ player_two_stats ['kills']}}</p>
+            <p class="subtitle">Assists: {{ player_two_stats ['assists']}}</p>
+            <p class="subtitle">Best_Rank_Point: {{ player_two_stats ['best_rank_point']}}</p>
+            <p class="subtitle">Boosts: {{ player_two_stats ['boosts']}}</p>
+            <p class="subtitle">Dbnos: {{ player_two_stats ['dbnos']}}</p>
+            <p class="subtitle">Daily_kills: {{ player_two_stats ['daily_kills']}}</p>
+            <p class="subtitle">Daily_wins: {{ player_two_stats ['daily_wins']}}</p>
+            <p class="subtitle">Damage_dealt: {{ player_two_stats ['damage_dealt']}}</p>
+            <p class="subtitle">Days: {{ player_two_stats ['days']}}</p>
+            <p class="subtitle">Headshot_Kills: {{ player_two_stats ['headshot_kills']}}</p>
+            <p class="subtitle">Kill_points: {{ player_two_stats ['kill_points']}}</p>
+            <p class="subtitle">Longest_kill: {{ player_two_stats ['longest_kill']}}</p>
+            <p class="subtitle">Longest_time_survived: {{ player_two_stats ['longest_time_survived']}}</p>
+            <p class="subtitle">Losses: {{ player_two_stats ['losses']}}</p>
+            <p class="subtitle">Max_kill_streaks: {{ player_two_stats ['max_kill_streaks']}}</p>
+            <p class="subtitle">Most_survival_time: {{ player_two_stats ['most_survival_time']}}</p>
+            <p class="subtitle">Rank_points: {{ player_two_stats ['rank_points']}}</p>
+            <p class="subtitle">Revives: {{ player_two_stats ['revives']}}</p>
+            <p class="subtitle">Ride_distance: {{ player_two_stats ['ride_distance']}}</p>
+            <p class="subtitle">Road_kills: {{ player_two_stats ['road_kills']}}</p>
+            <p class="subtitle">Round_most_kills: {{ player_two_stats ['round_most_kills']}}</p>
+            <p class="subtitle">Suicides: {{ player_two_stats ['suicides']}}</p>
+            <p class="subtitle">Swim_distance: {{ player_two_stats ['swim_distance']}}</p>
+            <p class="subtitle">Team_kills: {{ player_two_stats ['team_kills']}}</p>
+            <p class="subtitle">Time_survived: {{ player_two_stats ['time_survived']}}</p>
+            <p class="subtitle">Top_10s: {{ player_two_stats ['top_10s']}}</p>
+            <p class="subtitle">Vehicle_destroys: {{ player_two_stats ['vehicle_destroys']}}</p>
+            <p class="subtitle">Walk_distance: {{ player_two_stats ['walk_distance']}}</p>
+            <p class="subtitle">Weapons_acquired: {{ player_two_stats ['weapons_acquired']}}</p>
+            <p class="subtitle">Weekly_kills: {{ player_two_stats ['weekly_kills']}}</p>
+            <p class="subtitle">Weekly_wins: {{ player_two_stats ['weekly_wins']}}</p>
+            <p class="subtitle">Win_points: {{ player_two_stats ['win_points']}}</p>
       </div>
         {% endif %}
     </div>
