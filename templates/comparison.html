@@ -3,6 +3,15 @@
 
 {% block body %}
 
+<!--
+<style>
+body {
+    background-color: #1C1F2B
+
+}
+</style>
+-->
+
     <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
           <h1 class="display-4">Spielervergleich!</h1>
@@ -29,8 +38,46 @@
     </div>
 </section>
 
+<div class="container-fluid">
+<div class="card-group">
+  <div class="card mb-4">
+      <div class="card-header">
+          <h4 class="card-title">SOLO-STATS</h4>
+      </div>
+    <div class="card-body">
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="card mb-4">
+      <div class="card-header">
+          <h4 class="card-title">DUO-STATS</h4>
+      </div>
+    <div class="card-body">
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="card mb-4">
+      <div class="card-header">
+          <h4 class="card-title">SQUAD-STATS</h4>
+      </div>
+    <div class="card-body">
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+</div>
+</div>
 
 
+<!-- Graph Comparison Radar -->
+{% if player_one %}
+<canvas id="comparisonRadar"></canvas>
+{% endif %}
+
+<!-- Cards der Spieler, die bei der Suche erscheinen -->
 <div class="container">
     <div class="row">
         {% if player_one %}
@@ -39,41 +86,42 @@
         <div class="card-header">
             <h5>{{ player_one }}</h5>
         </div>
+
         <div class="card-body">
-            <p class="subtitle">Wins: {{ player_one_stats ['wins']}}</p>
-            <p class="subtitle">Matches: {{ player_one_stats ['rounds_played']}}</p>
-            <p class="subtitle">Kills: {{ player_one_stats ['kills']}}</p>
-            <p class="subtitle">Assists: {{ player_one_stats ['assists']}}</p>
-            <p class="subtitle">Best_Rank_Point: {{ player_one_stats ['best_rank_point']}}</p>
-            <p class="subtitle">Boosts: {{ player_one_stats ['boosts']}}</p>
-            <p class="subtitle">Dbnos: {{ player_one_stats ['dbnos']}}</p>
-            <p class="subtitle">Daily_kills: {{ player_one_stats ['daily_kills']}}</p>
-            <p class="subtitle">Daily_wins: {{ player_one_stats ['daily_wins']}}</p>
-            <p class="subtitle">Damage_dealt: {{ player_one_stats ['damage_dealt']}}</p>
-            <p class="subtitle">Days: {{ player_one_stats ['days']}}</p>
-            <p class="subtitle">Headshot_Kills: {{ player_one_stats ['headshot_kills']}}</p>
-            <p class="subtitle">Kill_points: {{ player_one_stats ['kill_points']}}</p>
-            <p class="subtitle">Longest_kill: {{ player_one_stats ['longest_kill']}}</p>
-            <p class="subtitle">Longest_time_survived: {{ player_one_stats ['longest_time_survived']}}</p>
-            <p class="subtitle">Losses: {{ player_one_stats ['losses']}}</p>
-            <p class="subtitle">Max_kill_streaks: {{ player_one_stats ['max_kill_streaks']}}</p>
-            <p class="subtitle">Most_survival_time: {{ player_one_stats ['most_survival_time']}}</p>
-            <p class="subtitle">Rank_points: {{ player_one_stats ['rank_points']}}</p>
-            <p class="subtitle">Revives: {{ player_one_stats ['revives']}}</p>
-            <p class="subtitle">Ride_distance: {{ player_one_stats ['ride_distance']}}</p>
-            <p class="subtitle">Road_kills: {{ player_one_stats ['road_kills']}}</p>
-            <p class="subtitle">Round_most_kills: {{ player_one_stats ['round_most_kills']}}</p>
-            <p class="subtitle">Suicides: {{ player_one_stats ['suicides']}}</p>
-            <p class="subtitle">Swim_distance: {{ player_one_stats ['swim_distance']}}</p>
-            <p class="subtitle">Team_kills: {{ player_one_stats ['team_kills']}}</p>
-            <p class="subtitle">Time_survived: {{ player_one_stats ['time_survived']}}</p>
-            <p class="subtitle">Top_10s: {{ player_one_stats ['top_10s']}}</p>
-            <p class="subtitle">Vehicle_destroys: {{ player_one_stats ['vehicle_destroys']}}</p>
-            <p class="subtitle">Walk_distance: {{ player_one_stats ['walk_distance']}}</p>
-            <p class="subtitle">Weapons_acquired: {{ player_one_stats ['weapons_acquired']}}</p>
-            <p class="subtitle">Weekly_kills: {{ player_one_stats ['weekly_kills']}}</p>
-            <p class="subtitle">Weekly_wins: {{ player_one_stats ['weekly_wins']}}</p>
-            <p class="subtitle">Win_points: {{ player_one_stats ['win_points']}}</p>
+            <p class="subtitle">Wins: {{ player_one_squad_fpp_stats ['wins']}}</p>
+            <p class="subtitle">Matches: {{ player_one_squad_fpp_stats ['rounds_played']}}</p>
+            <p class="subtitle">Kills: {{ player_one_squad_fpp_stats ['kills']}}</p>
+            <p class="subtitle">Assists: {{ player_one_squad_fpp_stats ['assists']}}</p>
+            <p class="subtitle">Best_Rank_Point: {{ player_one_squad_fpp_stats ['best_rank_point']}}</p>
+            <p class="subtitle">Boosts: {{ player_one_squad_fpp_stats ['boosts']}}</p>
+            <p class="subtitle">Dbnos: {{ player_one_squad_fpp_stats ['dbnos']}}</p>
+            <p class="subtitle">Daily_kills: {{ player_one_squad_fpp_stats ['daily_kills']}}</p>
+            <p class="subtitle">Daily_wins: {{ player_one_squad_fpp_stats ['daily_wins']}}</p>
+            <p class="subtitle">Damage_dealt: {{ player_one_squad_fpp_stats ['damage_dealt']}}</p>
+            <p class="subtitle">Days: {{ player_one_squad_fpp_stats ['days']}}</p>
+            <p class="subtitle">Headshot_Kills: {{ player_one_squad_fpp_stats ['headshot_kills']}}</p>
+            <p class="subtitle">Kill_points: {{ player_one_squad_fpp_stats ['kill_points']}}</p>
+            <p class="subtitle">Longest_kill: {{ player_one_squad_fpp_stats ['longest_kill']}}</p>
+            <p class="subtitle">Longest_time_survived: {{ player_one_squad_fpp_stats ['longest_time_survived']}}</p>
+            <p class="subtitle">Losses: {{ player_one_squad_fpp_stats ['losses']}}</p>
+            <p class="subtitle">Max_kill_streaks: {{ player_one_squad_fpp_stats ['max_kill_streaks']}}</p>
+            <p class="subtitle">Most_survival_time: {{ player_one_squad_fpp_stats ['most_survival_time']}}</p>
+            <p class="subtitle">Rank_points: {{ player_one_squad_fpp_stats ['rank_points']}}</p>
+            <p class="subtitle">Revives: {{ player_one_squad_fpp_stats ['revives']}}</p>
+            <p class="subtitle">Ride_distance: {{ player_one_squad_fpp_stats ['ride_distance']}}</p>
+            <p class="subtitle">Road_kills: {{ player_one_squad_fpp_stats ['road_kills']}}</p>
+            <p class="subtitle">Round_most_kills: {{ player_one_squad_fpp_stats ['round_most_kills']}}</p>
+            <p class="subtitle">Suicides: {{ player_one_squad_fpp_stats ['suicides']}}</p>
+            <p class="subtitle">Swim_distance: {{ player_one_squad_fpp_stats ['swim_distance']}}</p>
+            <p class="subtitle">Team_kills: {{ player_one_squad_fpp_stats ['team_kills']}}</p>
+            <p class="subtitle">Time_survived: {{ player_one_squad_fpp_stats ['time_survived']}}</p>
+            <p class="subtitle">Top_10s: {{ player_one_squad_fpp_stats ['top_10s']}}</p>
+            <p class="subtitle">Vehicle_destroys: {{ player_one_squad_fpp_stats ['vehicle_destroys']}}</p>
+            <p class="subtitle">Walk_distance: {{ player_one_squad_fpp_stats ['walk_distance']}}</p>
+            <p class="subtitle">Weapons_acquired: {{ player_one_squad_fpp_stats ['weapons_acquired']}}</p>
+            <p class="subtitle">Weekly_kills: {{ player_one_squad_fpp_stats ['weekly_kills']}}</p>
+            <p class="subtitle">Weekly_wins: {{ player_one_squad_fpp_stats ['weekly_wins']}}</p>
+            <p class="subtitle">Win_points: {{ player_one_squad_fpp_stats ['win_points']}}</p>
       </div>
   </div>
   </div>
@@ -85,40 +133,40 @@
             <h5>{{ player_two }}</h5>
         </div>
       <div class="card-body">
-            <p class="subtitle">Wins: {{ player_two_stats ['wins']}}</p>
-            <p class="subtitle">Matches: {{ player_two_stats ['rounds_played']}}</p>
-            <p class="subtitle">Kills: {{ player_two_stats ['kills']}}</p>
-            <p class="subtitle">Assists: {{ player_two_stats ['assists']}}</p>
-            <p class="subtitle">Best_Rank_Point: {{ player_two_stats ['best_rank_point']}}</p>
-            <p class="subtitle">Boosts: {{ player_two_stats ['boosts']}}</p>
-            <p class="subtitle">Dbnos: {{ player_two_stats ['dbnos']}}</p>
-            <p class="subtitle">Daily_kills: {{ player_two_stats ['daily_kills']}}</p>
-            <p class="subtitle">Daily_wins: {{ player_two_stats ['daily_wins']}}</p>
-            <p class="subtitle">Damage_dealt: {{ player_two_stats ['damage_dealt']}}</p>
-            <p class="subtitle">Days: {{ player_two_stats ['days']}}</p>
-            <p class="subtitle">Headshot_Kills: {{ player_two_stats ['headshot_kills']}}</p>
-            <p class="subtitle">Kill_points: {{ player_two_stats ['kill_points']}}</p>
-            <p class="subtitle">Longest_kill: {{ player_two_stats ['longest_kill']}}</p>
-            <p class="subtitle">Longest_time_survived: {{ player_two_stats ['longest_time_survived']}}</p>
-            <p class="subtitle">Losses: {{ player_two_stats ['losses']}}</p>
-            <p class="subtitle">Max_kill_streaks: {{ player_two_stats ['max_kill_streaks']}}</p>
-            <p class="subtitle">Most_survival_time: {{ player_two_stats ['most_survival_time']}}</p>
-            <p class="subtitle">Rank_points: {{ player_two_stats ['rank_points']}}</p>
-            <p class="subtitle">Revives: {{ player_two_stats ['revives']}}</p>
-            <p class="subtitle">Ride_distance: {{ player_two_stats ['ride_distance']}}</p>
-            <p class="subtitle">Road_kills: {{ player_two_stats ['road_kills']}}</p>
-            <p class="subtitle">Round_most_kills: {{ player_two_stats ['round_most_kills']}}</p>
-            <p class="subtitle">Suicides: {{ player_two_stats ['suicides']}}</p>
-            <p class="subtitle">Swim_distance: {{ player_two_stats ['swim_distance']}}</p>
-            <p class="subtitle">Team_kills: {{ player_two_stats ['team_kills']}}</p>
-            <p class="subtitle">Time_survived: {{ player_two_stats ['time_survived']}}</p>
-            <p class="subtitle">Top_10s: {{ player_two_stats ['top_10s']}}</p>
-            <p class="subtitle">Vehicle_destroys: {{ player_two_stats ['vehicle_destroys']}}</p>
-            <p class="subtitle">Walk_distance: {{ player_two_stats ['walk_distance']}}</p>
-            <p class="subtitle">Weapons_acquired: {{ player_two_stats ['weapons_acquired']}}</p>
-            <p class="subtitle">Weekly_kills: {{ player_two_stats ['weekly_kills']}}</p>
-            <p class="subtitle">Weekly_wins: {{ player_two_stats ['weekly_wins']}}</p>
-            <p class="subtitle">Win_points: {{ player_two_stats ['win_points']}}</p>
+            <p class="subtitle">Wins: {{ player_two_squad_fpp_stats ['wins']}}</p>
+            <p class="subtitle">Matches: {{ player_two_squad_fpp_stats ['rounds_played']}}</p>
+            <p class="subtitle">Kills: {{ player_two_squad_fpp_stats ['kills']}}</p>
+            <p class="subtitle">Assists: {{ player_two_squad_fpp_stats ['assists']}}</p>
+            <p class="subtitle">Best_Rank_Point: {{ player_two_squad_fpp_stats ['best_rank_point']}}</p>
+            <p class="subtitle">Boosts: {{ player_two_squad_fpp_stats ['boosts']}}</p>
+            <p class="subtitle">Dbnos: {{ player_two_squad_fpp_stats ['dbnos']}}</p>
+            <p class="subtitle">Daily_kills: {{ player_two_squad_fpp_stats ['daily_kills']}}</p>
+            <p class="subtitle">Daily_wins: {{ player_two_squad_fpp_stats ['daily_wins']}}</p>
+            <p class="subtitle">Damage_dealt: {{ player_two_squad_fpp_stats ['damage_dealt']}}</p>
+            <p class="subtitle">Days: {{ player_two_squad_fpp_stats ['days']}}</p>
+            <p class="subtitle">Headshot_Kills: {{ player_two_squad_fpp_stats ['headshot_kills']}}</p>
+            <p class="subtitle">Kill_points: {{ player_two_squad_fpp_stats ['kill_points']}}</p>
+            <p class="subtitle">Longest_kill: {{ player_two_squad_fpp_stats ['longest_kill']}}</p>
+            <p class="subtitle">Longest_time_survived: {{ player_two_squad_fpp_stats ['longest_time_survived']}}</p>
+            <p class="subtitle">Losses: {{ player_two_squad_fpp_stats ['losses']}}</p>
+            <p class="subtitle">Max_kill_streaks: {{ player_two_squad_fpp_stats ['max_kill_streaks']}}</p>
+            <p class="subtitle">Most_survival_time: {{ player_two_squad_fpp_stats ['most_survival_time']}}</p>
+            <p class="subtitle">Rank_points: {{ player_two_squad_fpp_stats ['rank_points']}}</p>
+            <p class="subtitle">Revives: {{ player_two_squad_fpp_stats ['revives']}}</p>
+            <p class="subtitle">Ride_distance: {{ player_two_squad_fpp_stats ['ride_distance']}}</p>
+            <p class="subtitle">Road_kills: {{ player_two_squad_fpp_stats ['road_kills']}}</p>
+            <p class="subtitle">Round_most_kills: {{ player_two_squad_fpp_stats ['round_most_kills']}}</p>
+            <p class="subtitle">Suicides: {{ player_two_squad_fpp_stats ['suicides']}}</p>
+            <p class="subtitle">Swim_distance: {{ player_two_squad_fpp_stats ['swim_distance']}}</p>
+            <p class="subtitle">Team_kills: {{ player_two_squad_fpp_stats ['team_kills']}}</p>
+            <p class="subtitle">Time_survived: {{ player_two_squad_fpp_stats ['time_survived']}}</p>
+            <p class="subtitle">Top_10s: {{ player_two_squad_fpp_stats ['top_10s']}}</p>
+            <p class="subtitle">Vehicle_destroys: {{ player_two_squad_fpp_stats ['vehicle_destroys']}}</p>
+            <p class="subtitle">Walk_distance: {{ player_two_squad_fpp_stats ['walk_distance']}}</p>
+            <p class="subtitle">Weapons_acquired: {{ player_two_squad_fpp_stats ['weapons_acquired']}}</p>
+            <p class="subtitle">Weekly_kills: {{ player_two_squad_fpp_stats ['weekly_kills']}}</p>
+            <p class="subtitle">Weekly_wins: {{ player_two_squad_fpp_stats ['weekly_wins']}}</p>
+            <p class="subtitle">Win_points: {{ player_two_squad_fpp_stats ['win_points']}}</p>
       </div>
         {% endif %}
     </div>

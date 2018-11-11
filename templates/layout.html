@@ -25,16 +25,18 @@
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
 
+
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()
     </script>
 
-    <!-- Graphs -->
+<!-- Graphs -->
+<!-- Line Chart  (Vorlage Bootstrap) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
-      var ctx = document.getElementById("myChart");
+      var ctx = document.getElementById("myChart1");
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -62,3 +64,79 @@
         }
       });
     </script>
+
+
+
+<!-- CHART JS VORLAGEN (Anderes Aussehen und Funktionen) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+<script>
+    var myLineChart = new new Chart(document.getElementById("myChart3"),{"type":"line","data":{"labels":["January","February","March","April","May","June","July"],"datasets":[{"label":"My First Dataset","data":[65,59,80,81,56,55,40],"fill":false,"borderColor":"rgb(75, 192, 192)","lineTension":0.1}]},"options":{}});
+</script>
+
+<!-- Radar Chart (Beispiel Aufbau)
+<script>
+    var ctx = document.getElementById("myChart3").getContext('2d');
+    var myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Running', 'Swimming', 'Eating', 'Cycling', 'Shooting', 'Driving', 'Boosting', 'Wins'],
+            datasets: [{
+                data: [20, 10, 4, 2, 12, 15, 8, 3],
+            }],
+        }
+    });
+</script>
+-->
+
+<!-- Quelle: https://www.chartjs.org/docs/latest/charts/radar.html -->
+<script>
+    var myRadarChart = new Chart(document.getElementById("myChart2"),{
+        "type":"radar",
+        "data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],
+            "datasets":[{"label":"My First Dataset",
+                    "data":[65,59,90,81,56,55,40],
+                    "borderColor":"rgb(255, 99, 132)",
+                    "pointBackgroundColor":"rgb(255, 99, 132)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(255, 99, 132)"},
+
+                {"label":"My Second Dataset",
+                    "data":[28,48,40,19,96,27,100],
+                    "fill":true,
+                    "backgroundColor":"rgba(54, 162, 235, 0.2)",
+                    "borderColor":"rgb(54, 162, 235)",
+                    "pointBackgroundColor":"rgb(54, 162, 235)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(54, 162, 235)"
+                }]
+        },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
+    });
+</script>
+
+<script>
+    var myRadarChart = new Chart(document.getElementById("comparisonRadar"),{
+        "type":"radar",
+        "data":{"labels":["Wins","Matches","Kills","Assists","Best_Rank_Point","Boosts","Dbnos"],
+            "datasets":[{"label":"{{ player_one }}",
+                    "data":[22,48,50,81,56,55,40],
+                    "borderColor":"rgb(255, 99, 132)",
+                    "pointBackgroundColor":"rgb(255, 99, 132)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(255, 99, 132)"},
+
+                {"label":"{{ player_two }}",
+                    "data":[28,48,40,19,96,27,100],
+                    "fill":true,
+                    "backgroundColor":"rgba(54, 162, 235, 0.2)",
+                    "borderColor":"rgb(54, 162, 235)",
+                    "pointBackgroundColor":"rgb(54, 162, 235)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(54, 162, 235)"
+                }]
+        },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
+    });
+</script>
