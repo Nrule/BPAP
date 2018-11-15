@@ -11,7 +11,17 @@
   <body>
       {% include 'includes/_navbar.html' %}
       <div class="container">
-      {% block body %}{% endblock %}
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          {% block body %}{% endblock %}
       </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   </body>
@@ -116,7 +126,59 @@
 </script>
 
 <script>
-    var myRadarChart = new Chart(document.getElementById("comparisonRadar"),{
+    var myRadarChart = new Chart(document.getElementById("comparisonRadar1"),{
+        "type":"radar",
+        "data":{"labels":["Wins","Matches","Kills","Assists","Best_Rank_Point","Boosts","Dbnos"],
+            "datasets":[{"label":"{{ player_one }}",
+                    "data":[22,48,50,81,56,55,40],
+                    "borderColor":"rgb(255, 99, 132)",
+                    "pointBackgroundColor":"rgb(255, 99, 132)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(255, 99, 132)"},
+
+                {"label":"{{ player_two }}",
+                    "data":[28,48,40,19,96,27,100],
+                    "fill":true,
+                    "backgroundColor":"rgba(54, 162, 235, 0.2)",
+                    "borderColor":"rgb(54, 162, 235)",
+                    "pointBackgroundColor":"rgb(54, 162, 235)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(54, 162, 235)"
+                }]
+        },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
+    });
+</script>
+
+<script>
+    var myRadarChart = new Chart(document.getElementById("comparisonRadar2"),{
+        "type":"radar",
+        "data":{"labels":["Wins","Matches","Kills","Assists","Best_Rank_Point","Boosts","Dbnos"],
+            "datasets":[{"label":"{{ player_one }}",
+                    "data":[22,48,50,81,56,55,40],
+                    "borderColor":"rgb(255, 99, 132)",
+                    "pointBackgroundColor":"rgb(255, 99, 132)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(255, 99, 132)"},
+
+                {"label":"{{ player_two }}",
+                    "data":[28,48,40,19,96,27,100],
+                    "fill":true,
+                    "backgroundColor":"rgba(54, 162, 235, 0.2)",
+                    "borderColor":"rgb(54, 162, 235)",
+                    "pointBackgroundColor":"rgb(54, 162, 235)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(54, 162, 235)"
+                }]
+        },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
+    });
+</script>
+
+<script>
+    var myRadarChart = new Chart(document.getElementById("comparisonRadar3"),{
         "type":"radar",
         "data":{"labels":["Wins","Matches","Kills","Assists","Best_Rank_Point","Boosts","Dbnos"],
             "datasets":[{"label":"{{ player_one }}",
