@@ -12,7 +12,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 
 # Validators sind Kriterien die die einzelnen Felder ueberpruefen
-from wtforms.validators import  InputRequired, Email, Length
+from wtforms.validators import InputRequired, Email, Length
 
 # Flask Bootstrap implementiert Bootstrap Variablen für das Projekt
 from flask_bootstrap import Bootstrap
@@ -104,7 +104,7 @@ def settings():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-        image_file = url_for('static', filename='default.jpg')
+        image_file = url_for('static', filename='Player1.jpg')
     return render_template('settings.html', form=form,
                            image_file=image_file,
                            name=current_user.username,
@@ -131,12 +131,13 @@ def comparison1():
         if player_two:
             player_two_solo_fpp_stats = Player_Stats_Solo(player_two)[1]
 
-    image_file = url_for('static', filename='default.jpg')
+    image_file1 = url_for('static', filename='Player1.jpg')
+    image_file2 = url_for('static', filename='Player2.jpg')
 
     return render_template('comparison.html', player_one=player_one, player_two=player_two,
                            player_one_solo_fpp_stats=player_one_solo_fpp_stats,
                            player_two_solo_fpp_stats=player_two_solo_fpp_stats,
-                           image_file=image_file, name=current_user.username,
+                           image_file1=image_file1, image_file2=image_file2, name=current_user.username,
                            )
 
 @app.route('/login', methods=['GET', 'POST'])

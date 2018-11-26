@@ -5,7 +5,6 @@
     <title>MyFlaskApp</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 
   </head>
   <body>
@@ -34,6 +33,7 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
+
 
 
     <!-- Icons -->
@@ -80,7 +80,42 @@
 <!-- CHART JS VORLAGEN (Anderes Aussehen und Funktionen) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 <script>
-    var myLineChart = new new Chart(document.getElementById("myChart3"),{"type":"line","data":{"labels":["January","February","March","April","May","June","July"],"datasets":[{"label":"My First Dataset","data":[65,59,80,81,56,55,40],"fill":false,"borderColor":"rgb(75, 192, 192)","lineTension":0.1}]},"options":{}});
+    var myLineChart = new new Chart(document.getElementById("myChart3"),{
+        "type":"line",
+        "data":{"labels": ["January","February","March","April","May","June","July"],
+            "datasets":[{"label":"My First Dataset",
+                "data":[65,59,80,81,56,55,40],
+                "fill":false,
+                "borderColor":"rgb(75, 192, 192)",
+                "lineTension":0.1}]},
+                "options":{}});
+</script>
+
+<script>
+    var myLineChart = new new Chart(document.getElementById("myChartComparison"),{
+        "type":"line",
+        "data":{"labels":["1","2","3","4","5","6","7","8","9","10","11","12","13","14"],
+            "datasets":[{"label":"{{ player_one }}",
+                    "data":[0.74,1.1,1.35,2.1,2.2,0.8,1.7,0.8,1.2,1.9,2.5,2.1,0.89,1.8],
+                    "fill":true,
+                    "borderColor":"rgb(255, 99, 132)",
+                    "pointBackgroundColor":"rgb(255, 99, 132)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(255, 99, 132)"},
+
+                {"label":"{{ player_two }}",
+                    "data":[0.8,1.2,1.9,2.5,2.1,0.89,1.8,0.74,1.1,1.35,2.1,2.2,0.8,1.7],
+                    "fill":true,
+                    "backgroundColor":"rgba(54, 162, 235, 0.2)",
+                    "borderColor":"rgb(54, 162, 235)",
+                    "pointBackgroundColor":"rgb(54, 162, 235)",
+                    "pointBorderColor":"#fff",
+                    "pointHoverBackgroundColor":"#fff",
+                    "pointHoverBorderColor":"rgb(54, 162, 235)"
+                }]
+        },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
+    });
 </script>
 
 <!-- Radar Chart (Beispiel Aufbau)
@@ -104,7 +139,7 @@
         "type":"radar",
         "data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],
             "datasets":[{"label":"My First Dataset",
-                    "data":[65,59,90,81,56,55,40],
+                    "data":[0.74,1.1,1.35,2.1,2.2,0.8,1.7],
                     "borderColor":"rgb(255, 99, 132)",
                     "pointBackgroundColor":"rgb(255, 99, 132)",
                     "pointBorderColor":"#fff",
@@ -112,7 +147,7 @@
                     "pointHoverBorderColor":"rgb(255, 99, 132)"},
 
                 {"label":"My Second Dataset",
-                    "data":[28,48,40,19,96,27,100],
+                    "data":[0.8,1.2,1.9,2.5,2.1,0.89,1.8],
                     "fill":true,
                     "backgroundColor":"rgba(54, 162, 235, 0.2)",
                     "borderColor":"rgb(54, 162, 235)",
@@ -182,7 +217,7 @@
         "type":"radar",
         "data":{"labels":["Wins","Matches","Kills","Assists","Best_Rank_Point","Boosts","Dbnos"],
             "datasets":[{"label":"{{ player_one }}",
-                    "data":[22,48,50,81,56,55,40],
+                    "data":[0.74,1.1,1.35,2.1,2.2,0.8,1.7],
                     "borderColor":"rgb(255, 99, 132)",
                     "pointBackgroundColor":"rgb(255, 99, 132)",
                     "pointBorderColor":"#fff",
@@ -190,7 +225,7 @@
                     "pointHoverBorderColor":"rgb(255, 99, 132)"},
 
                 {"label":"{{ player_two }}",
-                    "data":[28,48,40,19,96,27,100],
+                    "data":[0.74,1.1,1.35,2.1,2.2,0.8,1.7],
                     "fill":true,
                     "backgroundColor":"rgba(54, 162, 235, 0.2)",
                     "borderColor":"rgb(54, 162, 235)",
@@ -201,4 +236,28 @@
                 }]
         },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
     });
+</script>
+
+<script>
+var myBarChart = new Chart(document.getElementById("horizontal_rechts"), {
+    "type":"horizontalBar",
+    "data":{"labels":["January","February","March","April","May","June","July"],
+        "datasets":[{"label":"{{ player_one }}","data":[0.74,1.1,1.35,2.1,2.2,0.8,1.7],
+            "fill":false,
+            "backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
+            "borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
+            "borderWidth":1}]},
+    "options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]}}});
+</script>
+
+<script>
+var myBarChart = new Chart(document.getElementById("horizontal_links"), {
+    "type":"horizontalBar",
+    "data":{"labels":["January","February","March","April","May","June","July"],
+        "datasets":[{"data":[0.8,1.2,1.9,2.5,2.1,0.89,1.8],"label":"{{ player_two }}",
+            "fill":false,
+            "backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
+            "borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
+            "borderWidth":1}]},
+    "options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]}}});
 </script>

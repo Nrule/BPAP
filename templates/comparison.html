@@ -33,7 +33,7 @@
 <div class="card">
     <div class="card text-center">
         <div class="card-header">
-            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file }}">
+            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
             <h5>{{ player_one }}</h5>
         </div>
     </div>
@@ -63,7 +63,7 @@
 <div class="card">
     <div class="card text-center">
         <div class="card-header">
-            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file }}">
+            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
             <h5>{{ player_two }}</h5>
         </div>
     </div>
@@ -141,11 +141,480 @@
     </div>
 </div>
 
+<hr>
 
-<!-- Graph Comparison Radar
-{% if player_one %}
-<canvas id="comparisonRadar1"></canvas>
-{% endif %}
--->
+<div class="container">
+    <h1 class="display-4">Direkter Spielervergleich // SOLO)</h1>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                    <th><h5>Kategorie</h5></th>
+                  <th>
+                      <div class="text-center">
+                      <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
+                      <hr>
+                      <h5>{{ player_one }}</h5>
+                      </div>
+                  </th>
+                  <th>
+                      <div class="text-center">
+                      <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
+                      <hr>
+                      <h5>{{ player_two }}</h5>
+                      </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><h5>Matches Played</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['rounds_played']}}</td>
+                  <td>{{ player_two_solo_fpp_stats ['rounds_played']}}</td>
+                </tr>
+                <tr>
+                    <td><h5>Wins</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['wins']}}</td>
+                  <td>{{ player_two_solo_fpp_stats ['wins']}}</td>
+                </tr>
+                <tr>
+                  <td><h5>Top 10s</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['top_10s']}}</td>
+                  <td>{{ player_two_solo_fpp_stats ['top_10s']}}</td>
+                </tr>
+                <tr>
+                  <td><h5>Kills</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['kills']}}</td>
+                  <td>{{ player_two_solo_fpp_stats ['kills']}}</td>
+                </tr>
+                <tr>
+                  <td><h5>Damage_dealt</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['damage_dealt']}}</td>
+                  <td>{{ player_two_solo_fpp_stats ['damage_dealt']}}</td>
+                </tr>
+                <tr>
+                  <td><h5>Longest_kill</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['longest_kill']}}</td>
+                  <td>{{ player_two_solo_fpp_stats ['longest_kill']}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+    <h1 class="display-4">Direkter Spielervergleich (Graph) // SOLO)</h1>
+    <hr>
+
+</div>
+
+ <!-- Player One Auswahl -->
+
+<div class="container">
+<div class="row">
+  <div class="col-sm-6">
+      {% if player_one %}
+    <div class="card">
+      <div class="card-body">
+          <div class="media">
+            <div class="media-left">
+                <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ player_one }}</h4>
+                <h4>Rank: "******"</h4>
+                            <div class="container-fluid">
+                <div class="row">
+                 <div class="form-group">
+                    <select class="form-control" id="modus_player_one">
+                    <option>Solo</option>
+                    <option>Duo</option>
+                    <option>Squad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="sicht_player_one">
+                    <option>FPP</option>
+                    <option>TPP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="plattform_player_one">
+                    <option>Steam</option>
+                    <option>pc-eu</option>
+                    <option>pc-na</option>
+                    </select>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+      {% else %}
+      <div class="card">
+          <div class="card-body">
+      <div class="media">
+            <div class="media-left">
+                <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">Add Player 1</h4>
+                <p class="control is-expanded">
+                    <input type="hidden" name="playerOneName" value="{% if player_one %}{{ player_one }}{% endif %}">
+                    <input class="form-control" name="playerName1" type="text" placeholder="Player Name">
+                </p>
+                <p class="control">
+                    <button class="btn btn-outline-primary">Search</button>
+                </p>
+            </div>
+            </div>
+          </div>
+      </div>
+      {% endif %}
+  </div>
+
+  <!-- Player Two Auswahl -->
+
+  <div class="col-sm-6">
+      {% if player_two %}
+          <div class="card">
+      <div class="card-body">
+          <div class="media">
+            <div class="media-left">
+                <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ player_two }}</h4>
+                <h4>Rank: "******"</h4>
+                <div class="container-fluid">
+                <div class="row">
+                 <div class="form-group">
+                    <select class="form-control" id="sicht_player_two">
+                    <option>Solo</option>
+                    <option>Duo</option>
+                    <option>Squad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="modus_player_two">
+                    <option>FPP</option>
+                    <option>TPP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="plattform_player_two">
+                    <option>Steam</option>
+                    <option>pc-eu</option>
+                    <option>pc-na</option>
+                    </select>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+      {% else %}
+    <div class="card">
+      <div class="card-body">
+          <div class="media">
+            <div class="media-left">
+                <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">Add Player 2</h4>
+                <p class="control is-expanded">
+                    <input type="hidden" name="playerTwoName" value="{% if player_one %}{{ player_one }}{% endif %}">
+                    <input class="form-control" name="playerName2" type="text" placeholder="Player Name">
+                </p>
+                <p class="control">
+                    <button class="btn btn-outline-primary">Search</button>
+                </p>
+            </div>
+        </div>
+      </div>
+    </div>
+      {% endif %}
+  </div>
+</div>
+
+  <!-- Player One Tabelle -->
+
+<hr>
+ <div class="row">
+  <div class="col-sm-6">
+      {% if player_one %}
+    <div class="card">
+      <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th style="width: 2%"></th>
+                    <th style="width: 70%"></th>
+                    <th style="width: 28%"></th>
+                </tr>
+                </thead>
+              <tbody>
+                <tr>
+                  {% if player_two_solo_fpp_stats['rounds_played'] != null %}
+                    {% if player_one_solo_fpp_stats ['rounds_played'] > player_two_solo_fpp_stats['rounds_played'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_one_solo_fpp_stats['rounds_played'] < player_two_solo_fpp_stats['rounds_played'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                  {% else %}
+                   <td class="table-dark"></td>
+                  {% endif %}
+                  <td><h5>Matches Played</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['rounds_played']}}</td>
+                </tr>
+                <tr>
+                  {% if player_two_solo_fpp_stats['wins'] != null %}
+                    {% if player_one_solo_fpp_stats ['wins'] > player_two_solo_fpp_stats['wins'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_one_solo_fpp_stats['wins'] < player_two_solo_fpp_stats['wins'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                  {% else %}
+                   <td class="table-dark"></td>
+                  {% endif %}
+                  <td><h5>Wins</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['wins']}}</td>
+                </tr>
+                <tr>
+                  {% if player_two_solo_fpp_stats['top_10s'] != null %}
+                    {% if player_one_solo_fpp_stats ['top_10s'] > player_two_solo_fpp_stats['top_10s'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_one_solo_fpp_stats['top_10s'] < player_two_solo_fpp_stats['top_10s'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                  {% else %}
+                   <td class="table-dark"></td>
+                  {% endif %}
+                  <td><h5>Top 10s</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['top_10s']}}</td>
+                </tr>
+                <tr>
+                  {% if player_two_solo_fpp_stats['kills'] != null %}
+                    {% if player_one_solo_fpp_stats ['kills'] > player_two_solo_fpp_stats['kills'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_one_solo_fpp_stats['kills'] < player_two_solo_fpp_stats['kills'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                  {% else %}
+                   <td class="table-dark"></td>
+                  {% endif %}
+                  <td><h5>Kills</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['kills']}}</td>
+                </tr>
+                <tr>
+                  {% if player_two_solo_fpp_stats['damage_dealt'] != null %}
+                    {% if player_one_solo_fpp_stats ['damage_dealt'] > player_two_solo_fpp_stats['damage_dealt'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_one_solo_fpp_stats['damage_dealt'] < player_two_solo_fpp_stats['damage_dealt'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                  {% else %}
+                   <td class="table-dark"></td>
+                  {% endif %}
+                  <td><h5>Damage_dealt</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['damage_dealt']}}</td>
+                </tr>
+                <tr>
+                  {% if player_two_solo_fpp_stats['longest_time_survived'] != null %}
+                    {% if player_one_solo_fpp_stats ['longest_kill'] > player_two_solo_fpp_stats['longest_kill'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_one_solo_fpp_stats['longest_kill'] < player_two_solo_fpp_stats['longest_kill'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                  {% else %}
+                   <td class="table-dark"></td>
+                  {% endif %}
+                  <td><h5>Longest_kill</h5></td>
+                  <td>{{ player_one_solo_fpp_stats ['longest_kill']}}</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+    </div>
+  </div>
+      {% endif %}
+</div>
+
+     <!-- Player Two Tabelle -->
+
+    <div class="col-sm-6">
+        {% if player_two %}
+    <div class="card">
+      <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th style="width: 70%"></th>
+                    <th style="width: 28%"></th>
+                    <th style="width: 2%"></th>
+                </tr>
+                </thead>
+              <tbody>
+                <tr>
+                  <td><h5>Matches Played</h5></td>
+                  <td>{{ player_two_solo_fpp_stats ['rounds_played']}}</td>
+                    {% if player_two_solo_fpp_stats ['rounds_played'] > player_one_solo_fpp_stats['rounds_played'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_two_solo_fpp_stats['rounds_played'] < player_one_solo_fpp_stats['rounds_played'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                  <td><h5>Wins</h5></td>
+                  <td>{{ player_two_solo_fpp_stats ['wins']}}</td>
+                    {% if player_two_solo_fpp_stats ['wins'] > player_one_solo_fpp_stats['wins'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_two_solo_fpp_stats['wins'] < player_one_solo_fpp_stats['wins'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                  <td><h5>Top 10s</h5></td>
+                  <td>{{ player_two_solo_fpp_stats ['top_10s']}}</td>
+                    {% if player_two_solo_fpp_stats ['top_10s'] > player_one_solo_fpp_stats['top_10s'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_two_solo_fpp_stats['top_10s'] < player_one_solo_fpp_stats['top_10s'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                  <td><h5>Kills</h5></td>
+                  <td>{{ player_two_solo_fpp_stats ['kills']}}</td>
+                    {% if player_two_solo_fpp_stats ['kills'] > player_one_solo_fpp_stats['kills'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_two_solo_fpp_stats['kills'] < player_one_solo_fpp_stats['kills'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                  <td><h5>Damage_dealt</h5></td>
+                  <td>{{ player_two_solo_fpp_stats ['damage_dealt']}}</td>
+                    {% if player_two_solo_fpp_stats ['damage_dealt'] > player_one_solo_fpp_stats['damage_dealt'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_two_solo_fpp_stats['damage_dealt'] < player_one_solo_fpp_stats['damage_dealt'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                  <td><h5>Longest_kill</h5></td>
+                  <td>{{ player_two_solo_fpp_stats ['longest_kill']}}</td>
+                    {% if player_two_solo_fpp_stats ['longest_kill'] > player_one_solo_fpp_stats['longest_kill'] %}
+                    <td class="bg-success"></td>
+                    {% elif player_two_solo_fpp_stats['longest_kill'] < player_one_solo_fpp_stats['longest_kill'] %}
+                    <td class="bg-danger"></td>
+                    {% else %}
+                    <td class="table-dark"></td>
+                    {% endif %}
+                </tr>
+              </tbody>
+            </table>
+      </div>
+      </div>
+    </div>
+        {% endif %}
+  </div>
+</div>
+
+<hr>
+
+    <div class="card">
+        {% if player_one %}{% if player_two %}
+      <div class="card-body">
+              <h4>Form</h4>
+          <p><h6>Sliding window of rating 1.0 - 1 day increments</h6></p>
+          <canvas class="my-4 w-100" id="myChartComparison"></canvas>
+      </div>
+        {% endif %}
+        {% endif %}
+    </div>
+
+<hr>
+
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col" style="text-align:center" style="width: 10%">Wert_links</th>
+      <th scope="col" style="text-align:center" style="width: 20%">{{ player_one }}</th>
+      <th scope="col" style="text-align:center" style="width: 40%">Kategorien</th>
+      <th scope="col" style="text-align:center" style="width: 20%">{{ player_two }}</th>
+      <th scope="col" style="text-align:center" style="width: 10%">Wert_rechts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['rounds_played']}}</td>
+      <td class="table-danger">Mark</td>
+      <td style="text-align:center">Matches Played</td>
+      <td style="text-align:right"  class="table-primary">@mdo</td>
+      <td style="text-align:left">{{ player_two_solo_fpp_stats ['rounds_played']}}</td>
+    </tr>
+    <tr>
+      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['wins']}}</td>
+      <td class="table-danger">Mark</td>
+      <td style="text-align:center">Wins</td>
+      <td style="text-align:right" class="table-primary">@mdo</td>
+      <td style="text-align:left">{{ player_two_solo_fpp_stats ['wins']}}</td>
+    </tr>
+    <tr>
+      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['top_10s']}}</td>
+      <td class="table-danger">Mark</td>
+      <td style="text-align:center">Top 10s</td>
+      <td style="text-align:right" class="table-primary">@mdo</td>
+      <td style="text-align:left">{{ player_two_solo_fpp_stats ['top_10s']}}</td>
+    </tr>
+    <tr>
+      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['kills']}}</td>
+      <td class="table-danger">Mark</td>
+      <td style="text-align:center">Kills</td>
+      <td style="text-align:right" class="table-primary">@mdo</td>
+      <td style="text-align:left">{{ player_two_solo_fpp_stats ['kills']}}</td>
+    </tr>
+    <tr>
+      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['damage_dealt']}}</td>
+      <td class="table-danger">Mark</td>
+      <td style="text-align:center">Damage_dealt</td>
+      <td style="text-align:right" class="table-primary">@mdo</td>
+      <td style="text-align:left">{{ player_two_solo_fpp_stats ['damage_dealt']}}</td>
+    </tr>
+    <tr>
+      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['longest_kill']}}</td>
+      <td class="table-danger">Mark</td>
+      <td style="text-align:center">Longest_kill</td>
+      <td style="text-align:right" class="table-primary">@mdo</td>
+      <td style="text-align:left">{{ player_two_solo_fpp_stats ['longest_kill']}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
 
 {% endblock %}
