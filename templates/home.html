@@ -1,29 +1,37 @@
 {% extends 'layout.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
-<div class="jumbotron">
 
-          <h1 class="display-3">Hello, world!</h1>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      </div>
-
-<div class="row">
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+        <div class="jumbotron">
+            <h1 class="display-3">PUBG Stats</h1>
+            <p>Auf dieser Website kannst du deine PUBG Spieldaten darstellen und vergleichen.</p>
+            <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
         </div>
+    </div>
+    {% if current_user.is_authenticated %}  
+
+    {% else %}
+    <div class="col-md-4">
+        <div class="content-section">
+          <p class='text-muted'>
+            <form class="form-signin" method="POST" action="/login">
+              <h2 class="form-signin-heading">Please sign in</h2>
+              {{ form.hidden_tag() }}
+              {{ wtf.form_field(form.username) }}
+              {{ wtf.form_field(form.password) }}
+              {{ wtf.form_field(form.remember) }}
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+          </p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</main>
+
 
 {% endblock %}
