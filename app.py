@@ -23,13 +23,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Vorgefertigte Variablen für Flask, um den Loginprozess programmiertechnisch einfacher zu gestalten
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-# Testimport für die Seite Artikel
-from data import Articles
-
-from data2 import Player_Stats_Solo
-
-from libgravatar import Gravatar
-
+from data import Player_Stats_Solo
 
 # Initialisierung des Flask Projekts
 app = Flask(__name__)
@@ -51,8 +45,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# Für Seite: Artikel
-Articles = Articles()
 
 '''
 import os
@@ -83,7 +75,7 @@ def home():
             else:
                 flash('Login Unsuccessful. Please check username and password', 'danger')
 
-        return '<h1>Ungueltiger Username oder Passwort</h1>'
+        #return '<h1>Ungueltiger Username oder Passwort</h1>'
         #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
 
     return render_template('home.html', form=form) 
@@ -91,14 +83,6 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
-@app.route('/articles')
-def articles():
-    return render_template('articles.html', articles = Articles)
-
-@app.route('/article/<string:id>/')
-def article(id):
-    return render_template('article.html', id=id)
 
 @app.route('/dashboard')
 @login_required
