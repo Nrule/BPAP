@@ -38,7 +38,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HalloWelt'
 
 # Adresse der SQLite Datenbank - Auf die Zeichenfolge muss geachtet werden
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\Max\\PycharmProjects\\untitled1\\templates\\database\\database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///templates/database/database.db'
 
 # Initialisierung der Datenbank
 db = SQLAlchemy(app)
@@ -70,7 +70,23 @@ def index():
 
 @app.route('/home')
 def home():
-   return render_template('home.html')
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if check_password_hash(user.password, form.password.data):
+                flash(f'You have been logged in!', 'success')
+                login_user(user, remember=form.remember.data)
+                #Vorerst wird der Nutzer nach einem erfolgreichen Login auf die About-Seite geschickt
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Login Unsuccessful. Please check username and password', 'danger')
+
+        return '<h1>Ungueltiger Username oder Passwort</h1>'
+        #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
+
+    return render_template('home.html', form=form) 
 
 @app.route('/about')
 def about():
@@ -158,7 +174,8 @@ def login():
         return '<h1>Ungueltiger Username oder Passwort</h1>'
         #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
 
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form) 
+   
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
