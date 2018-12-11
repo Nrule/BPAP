@@ -25,6 +25,12 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 from data import Player_Stats_Solo
 
+# Gavatar Hash
+from hashlib import md5
+
+#Http Exceptions zum Abfangen von Problemen
+from werkzeug.exceptions import HTTPException, NotFound
+
 # Initialisierung des Flask Projekts
 app = Flask(__name__)
 
@@ -39,6 +45,8 @@ db = SQLAlchemy(app)
 
 # Verknuepfung von Bootstrap zu der App ...
 Bootstrap(app)
+
+
 
 # Aufruf des LoginManagers
 login_manager = LoginManager()
@@ -137,8 +145,7 @@ def comparison1():
     return render_template('comparison.html', player_one=player_one, player_two=player_two,
                            player_one_solo_fpp_stats=player_one_solo_fpp_stats,
                            player_two_solo_fpp_stats=player_two_solo_fpp_stats,
-                           image_file1=image_file1, image_file2=image_file2, name=current_user.username,
-                           )
+                           image_file1=image_file1, image_file2=image_file2, name=current_user.username)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -154,8 +161,10 @@ def login():
                 return redirect(url_for('dashboard'))
             else:
                 flash('Login Unsuccessful. Please check username and password', 'danger')
+        else:
+            flash('Login Unsuccessful. Please check username and password', 'danger')
 
-        return '<h1>Ungueltiger Username oder Passwort</h1>'
+        #return '<h1>Ungueltiger Username oder Passwort</h1>'
         #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
 
     return render_template('login.html', form=form) 
@@ -166,12 +175,12 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
         #sha256 erzeugt ein 80 Charakter langes Passwort, daher auch in der DB 80 Stellen vermerkt
         hashed_password = generate_password_hash(form.password.data, method='sha256')
         new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
+        flash(f'Account created for {form.username.data}!', 'success')
 
         return redirect(url_for('home'))
 
@@ -190,11 +199,32 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+# Error Handling für 404:(Kann später auch in Errors.py ausgelagert werden)
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+# Error Handling für 500:
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
+
+# Error Handling bei HTTP-Exceptions (API)
+@app.errorhandler(Exception)
+def http_error_handler(error):
+    return render_template('400.html')
+
 
 # Felder für die LoginSeite
 class LoginForm(FlaskForm):

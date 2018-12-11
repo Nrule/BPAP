@@ -24,185 +24,9 @@
         </form>
 </section>
 
-
-
-
-<div class="card-group">
-
-<!-- Card 1 -->
-<div class="card">
-    <div class="card text-center">
-        <div class="card-header">
-            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
-            <h5>{{ player_one }}</h5>
-        </div>
-    </div>
- <div class="card-body">
-     <ul class="list-group list-group-flush">
-         <li class="list-group-item">
-            <div class="row">
-	            <div class="col-md-3"><h5>Matches Played</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_one_solo_fpp_stats ['rounds_played']}}</big></h5></div>
-	            <div class="col-md-3"><h5>Wins</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_one_solo_fpp_stats ['wins']}}</big></h5></div>
-            </div>
-         </li>
-         <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-3"><h5>Top 10s</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_one_solo_fpp_stats ['top_10s']}}</big></h5></div>
-	            <div class="col-md-3"><h5>Kills</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_one_solo_fpp_stats ['kills']}}</big></h5></div>
-            </div>
-         </li>
-     </ul>
-</div>
-</div>
-
-<!-- Card 2 -->
-<div class="card">
-    <div class="card text-center">
-        <div class="card-header">
-            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
-            <h5>{{ player_two }}</h5>
-        </div>
-    </div>
- <div class="card-body">
-     <ul class="list-group list-group-flush">
-         <li class="list-group-item">
-            <div class="row">
-	            <div class="col-md-3"><h5>Matches Played</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_two_solo_fpp_stats ['rounds_played']}}</big></h5></div>
-	            <div class="col-md-3"><h5>Wins</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_two_solo_fpp_stats ['wins']}}</big></h5></div>
-            </div>
-         </li>
-         <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-3"><h5>Top 10s</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_two_solo_fpp_stats ['top_10s']}}</big></h5></div>
-	            <div class="col-md-3"><h5>Kills</h5></div>
-                <div class="col-md-3"><h5><big>{{ player_two_solo_fpp_stats ['kills']}}</big></h5></div>
-            </div>
-         </li>
-     </ul>
-</div>
-</div>
-
-<!-- Cards der Spieler, die bei der Suche erscheinen -->
-<div class="container">
-    <div class="row">
-        {% if player_one %}
-  <div class="col-sm-6">
-    <div class="card text-white bg-info mb-3">
-        <div class="card-header">
-            <h5>{{ player_one }}</h5>
-        </div>
-
-        <div class="card-body">
-            <p class="subtitle">Wins: {{ player_one_solo_fpp_stats ['wins']}}</p>
-            <p class="subtitle">Matches: {{ player_one_solo_fpp_stats ['rounds_played']}}</p>
-            <p class="subtitle">Kills: {{ player_one_solo_fpp_stats ['kills']}}</p>
-            <p class="subtitle">Best_Rank_Point: {{ player_one_solo_fpp_stats ['best_rank_point']}}</p>
-            <p class="subtitle">Damage_dealt: {{ player_one_solo_fpp_stats ['damage_dealt']}}</p>
-            <p class="subtitle">Longest_kill: {{ player_one_solo_fpp_stats ['longest_kill']}}</p>
-            <p class="subtitle">Longest_time_survived: {{ player_one_solo_fpp_stats ['longest_time_survived']}}</p>
-            <p class="subtitle">Max_kill_streaks: {{ player_one_solo_fpp_stats ['max_kill_streaks']}}</p>
-            <p class="subtitle">Rank_points: {{ player_one_solo_fpp_stats ['rank_points']}}</p>
-            <p class="subtitle">Round_most_kills: {{ player_one_solo_fpp_stats ['round_most_kills']}}</p>
-            <p class="subtitle">Top_10s: {{ player_one_solo_fpp_stats ['top_10s']}}</p>
-      </div>
-  </div>
-  </div>
-        {% endif %}
-        {% if player_two %}
-  <div class="col-sm-6">
-    <div class="card text-white bg-warning mb-3">
-        <div class="card-header">
-            <h5>{{ player_two }}</h5>
-        </div>
-      <div class="card-body">
-            <p class="subtitle">Wins: {{ player_two_solo_fpp_stats ['wins']}}</p>
-            <p class="subtitle">Matches: {{ player_two_solo_fpp_stats ['rounds_played']}}</p>
-            <p class="subtitle">Kills: {{ player_two_solo_fpp_stats ['kills']}}</p>
-            <p class="subtitle">Best_Rank_Point: {{ player_two_solo_fpp_stats ['best_rank_point']}}</p>
-            <p class="subtitle">Damage_dealt: {{ player_two_solo_fpp_stats ['damage_dealt']}}</p>
-            <p class="subtitle">Longest_kill: {{ player_two_solo_fpp_stats ['longest_kill']}}</p>
-            <p class="subtitle">Longest_time_survived: {{ player_two_solo_fpp_stats ['longest_time_survived']}}</p>
-            <p class="subtitle">Max_kill_streaks: {{ player_two_solo_fpp_stats ['max_kill_streaks']}}</p>
-            <p class="subtitle">Rank_points: {{ player_two_solo_fpp_stats ['rank_points']}}</p>
-            <p class="subtitle">Round_most_kills: {{ player_two_solo_fpp_stats ['round_most_kills']}}</p>
-            <p class="subtitle">Top_10s: {{ player_two_solo_fpp_stats ['top_10s']}}</p>
-      </div>
-        {% endif %}
-    </div>
-  </div>
-
-    </div>
-</div>
+<h1 class="display-4">Direkter Spielervergleich (Graph) // SOLO)</h1>
 
 <hr>
-
-<div class="container">
-    <h1 class="display-4">Direkter Spielervergleich // SOLO)</h1>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                    <th><h5>Kategorie</h5></th>
-                  <th>
-                      <div class="text-center">
-                      <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
-                      <hr>
-                      <h5>{{ player_one }}</h5>
-                      </div>
-                  </th>
-                  <th>
-                      <div class="text-center">
-                      <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
-                      <hr>
-                      <h5>{{ player_two }}</h5>
-                      </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><h5>Matches Played</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['rounds_played']}}</td>
-                  <td>{{ player_two_solo_fpp_stats ['rounds_played']}}</td>
-                </tr>
-                <tr>
-                    <td><h5>Wins</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['wins']}}</td>
-                  <td>{{ player_two_solo_fpp_stats ['wins']}}</td>
-                </tr>
-                <tr>
-                  <td><h5>Top 10s</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['top_10s']}}</td>
-                  <td>{{ player_two_solo_fpp_stats ['top_10s']}}</td>
-                </tr>
-                <tr>
-                  <td><h5>Kills</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['kills']}}</td>
-                  <td>{{ player_two_solo_fpp_stats ['kills']}}</td>
-                </tr>
-                <tr>
-                  <td><h5>Damage_dealt</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['damage_dealt']}}</td>
-                  <td>{{ player_two_solo_fpp_stats ['damage_dealt']}}</td>
-                </tr>
-                <tr>
-                  <td><h5>Longest_kill</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['longest_kill']}}</td>
-                  <td>{{ player_two_solo_fpp_stats ['longest_kill']}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-    <h1 class="display-4">Direkter Spielervergleich (Graph) // SOLO)</h1>
-    <hr>
 
 </div>
 
@@ -558,7 +382,7 @@
     </div>
 
 <hr>
-
+<!--
 <table class="table table-borderless">
   <thead>
     <tr>
@@ -614,7 +438,7 @@
     </tr>
   </tbody>
 </table>
-
+-->
 
 
 {% endblock %}
