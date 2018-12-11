@@ -23,13 +23,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Vorgefertigte Variablen für Flask, um den Loginprozess programmiertechnisch einfacher zu gestalten
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-from data import Player_Stats_Solo
+# Funktionen von data
+from data import *
 
 # Gavatar Hash
 from hashlib import md5
 
 #Http Exceptions zum Abfangen von Problemen
 from werkzeug.exceptions import HTTPException, NotFound
+
 
 # Initialisierung des Flask Projekts
 app = Flask(__name__)
@@ -104,6 +106,7 @@ def settings():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.pubgusername = form.pubgusername.data
         db.session.commit()
         flash('Your account hast been updated!', 'success')
 
@@ -111,12 +114,14 @@ def settings():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.pubgusername.data = current_user.pubgusername
 
         image_file = url_for('static', filename='Player1.jpg')
     return render_template('settings.html', form=form,
                            image_file=image_file,
                            name=current_user.username,
-                           email=current_user.email)
+                           email=current_user.email,
+                           pubgusername=current_user.pubgusername)
 
 @app.route('/comparison', methods=['GET', 'POST'])
 @login_required
@@ -199,6 +204,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    pubgusername = db.Column(db.String(20))
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
@@ -210,18 +216,18 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Error Handling für 404:(Kann später auch in Errors.py ausgelagert werden)
-@app.errorhandler(404)
+#@app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
 
 # Error Handling für 500:
-@app.errorhandler(500)
+#@app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
 # Error Handling bei HTTP-Exceptions (API)
-@app.errorhandler(Exception)
+#@app.errorhandler(Exception)
 def http_error_handler(error):
     return render_template('400.html')
 
@@ -241,6 +247,7 @@ class RegisterForm(FlaskForm):
 class SettingsForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
     email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    pubgusername = StringField('PUBG Username', validators=[InputRequired(), Length(min=4, max=15)])
 
 # Start der Applikation im Debugmodus (Seite muss nicht bei jeder Aenderung neu gestartet werden - geschieht dann automatisch)
 if __name__ == '__main__':
