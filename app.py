@@ -29,9 +29,11 @@ from data import *
 # Gavatar Hash
 from hashlib import md5
 
-#Http Exceptions zum Abfangen von Problemen
-from werkzeug.exceptions import HTTPException, NotFound
+# Flask Admin Imports
+from flask_admin import Admin, AdminIndexView
+from flask_admin.contrib.sqla import ModelView
 
+#from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required, current_user
 
 # Initialisierung des Flask Projekts
 app = Flask(__name__)
@@ -152,6 +154,13 @@ def comparison1():
                            player_two_solo_fpp_stats=player_two_solo_fpp_stats,
                            image_file1=image_file1, image_file2=image_file2, name=current_user.username)
 
+@app.route('/playersearch', methods=['GET', 'POST'])
+@login_required
+def playersearch():
+
+    return render_template('playersearch.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -209,6 +218,27 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
+
+
+#-----------------------------------------------------------------------------------------------------
+# Flask Admin Block
+class MyModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login'))
+
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+# Flask Admin
+admin = Admin(app, index_view=MyAdminIndexView(), template_mode='bootstrap3')
+# Flask-Admin mit der Datenbank "verbinden" oder den Blick auf die Usertabelle freigeben
+admin.add_view(ModelView(User, db.session))
+#-----------------------------------------------------------------------------------------------------
+
 
 
 @login_manager.user_loader
