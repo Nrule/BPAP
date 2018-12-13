@@ -24,10 +24,6 @@ def Player_Stats(playername):
     shroud = pubgcore.players("player_names", "shroud")
     print(shroud)
 
-
-
-
-
 api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5OGNiYzI3MC1iYTlkLTAxMzYtNjg3MS02YjU5NWYzNGI3NjciLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQwNDgzNDc3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImJwYXAifQ.hr--q6zWIXB6Fkba3XGhgMaQUubCo9vn1h1YgMm1dVk"
 pubgcore = PUBGCore(api_key, "pc-eu")
 shroud = pubgcore.players("player_names", "Vengaard")
@@ -38,6 +34,10 @@ shroud = pubgcore.players("player_names", "Vengaard")
 for data in shroud['data']:
    id = (data['id'])
    #print(id)
+
+#Creates a json file 
+#with open("json/data_file.json", "w") as write_file:
+#   json.dump(shroud, write_file, indent=2)
 
 lifetime = pubgcore.lifetime(id)
 print(lifetime)
