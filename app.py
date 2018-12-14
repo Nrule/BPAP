@@ -90,7 +90,12 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    HSA = url_for('static', filename='FH-Augsburg-Logo.svg.png')
+    HSA_Links = url_for('static', filename='HSA_Links.png')
+    HSA_Mitte = url_for('static', filename='HSA_Mitte.png')
+    HSA_Rechts = url_for('static', filename='HSA_Rechts.png')
+
+    return render_template('about.html', HSA=HSA, HSA_Links=HSA_Links, HSA_Mitte=HSA_Mitte, HSA_Rechts=HSA_Rechts)
 
 @app.route('/dashboard')
 @login_required
