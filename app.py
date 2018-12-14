@@ -50,8 +50,6 @@ db = SQLAlchemy(app)
 # Verknuepfung von Bootstrap zu der App ...
 Bootstrap(app)
 
-
-
 # Aufruf des LoginManagers
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -68,10 +66,8 @@ class Config(object):
 '''
 
 #Routing für die einzelnen Seiten
-@app.route('/')
-def index():
-    return render_template('home.html')
 
+@app.route('/')
 @app.route('/home')
 def home():
     form = LoginForm()
