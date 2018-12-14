@@ -10,6 +10,7 @@
         </div>
       </div>
 
+<!--
 <div class="container">
 <div class="content-section">
     <div class="media">
@@ -30,4 +31,62 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
   </form>
 </div>
+
+<hr>
+
+-->
+
+<div class="row">
+    <div class="col-md-6">
+    <div class="card-light">
+        <div class="card-header-light bg-transparent text-center">
+            <h1 class="display-5">Aktuelle Daten</h1>
+            <hr>
+        </div>
+        <div class="text-center">
+            <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file }}">
+
+            <!-- Nur reingemacht um etwas Platz nach unten zu bekommen-->
+            <p></p>
+            <!-- -->
+
+        </div>
+            <div class="container">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th scope="row">Username</th>
+                      <td>{{ name }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Email</th>
+                      <td>{{ email }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">PUBG Username</th>
+                      <td>{{ pubgusername }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+    <div class="card-light">
+        <div class="card-header-light bg-transparent text-center">
+            <h1 class="display-5">Daten ändern</h1>
+            <hr>
+        </div>
+        <form class="form-signin" method="POST" action="/settings">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(form.username) }}
+            {{ wtf.form_field(form.email) }}
+            {{ wtf.form_field(form.pubgusername) }}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+        </form>
+    </div>
+    </div>
+</div>
+
 {% endblock %}

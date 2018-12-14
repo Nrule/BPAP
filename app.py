@@ -94,7 +94,9 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    HSA = url_for('static', filename='FH-Augsburg-Logo.svg.png')
+
+    return render_template('about.html', HSA=HSA)
 
 @app.route('/dashboard')
 @login_required
