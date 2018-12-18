@@ -10,7 +10,7 @@
   <body>
 
     <!-- Navigationsbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
         
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,21 +23,20 @@
         
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            
-            <li class="{% block nav_home %}{% endblock %}">
-                <a class="nav-link" href="/home">Home</a>
-            </li>
-            {% if current_user.is_authenticated %}
-            <li class="{% block nav_comparison %}{% endblock %}">
-                <a class="nav-link" href="/comparison">Spielervergleich</a>
-            </li>
-            <li class="{% block nav_playersearch %}{% endblock %}">
-                <a class="nav-link" href="/playersearch">Spielersuche</a>
-            </li>
-            <li class="{% block nav_dashboard %}{% endblock %}">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-            </li>
-            {% endif %}
+                <li class="{% block nav_home %}{% endblock %}">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="{% block nav_dashboard %}{% endblock %}">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="{% block nav_playersearch %}{% endblock %}">
+                    <a class="nav-link" href="/playersearch">Spielersuche</a>
+                </li>
+                <li class="{% block nav_comparison %}{% endblock %}">
+                    <a class="nav-link" href="/comparison">Spielervergleich</a>
+                </li>
+                {% endif %}
             </ul>
         
         <ul class="navbar-nav navbar-right">
@@ -111,12 +110,11 @@
 <!-- Line Chart  (Vorlage Bootstrap) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
-      var test = "Monday"
       var ctx = document.getElementById("myChart1");
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ["Sunday", test, "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
           datasets: [{
             data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
             lineTension: 0,
@@ -201,8 +199,9 @@
 -->
 
 <!-- Quelle: https://www.chartjs.org/docs/latest/charts/radar.html -->
+
 <script>
-    var myRadarChart = new Chart(document.getElementById("myChart2"),{
+    var myRadarChart = new Chart(document.getElementById("radartest"),{
         "type":"radar",
         "data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],
             "datasets":[{"label":"My First Dataset",
@@ -225,6 +224,21 @@
                 }]
         },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
     });
+</script>
+
+<script>
+var myRadarChart = new Chart(document.getElementById("radardashboard"),{
+    "type":"radar",
+    "data":{"labels":["Win%","Top10%","Sleeping","K/D Ratio","Headshot%"],
+        "datasets":[{"label":"LifetimeStats",
+                "data":[0.74,1.1,1.35,2.1,2.2],
+                "borderColor":"rgb(255, 99, 132)",
+                "pointBackgroundColor":"rgb(255, 99, 132)",
+                "pointBorderColor":"#fff",
+                "pointHoverBackgroundColor":"#fff",
+                "pointHoverBorderColor":"rgb(255, 99, 132)"}]
+    },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
+});
 </script>
 
 <script>

@@ -5,6 +5,31 @@ def Apikey():
     api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5OGNiYzI3MC1iYTlkLTAxMzYtNjg3MS02YjU5NWYzNGI3NjciLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQwNDgzNDc3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImJwYXAifQ.hr--q6zWIXB6Fkba3XGhgMaQUubCo9vn1h1YgMm1dVk"
     return(api_key)
 
+def Player_Core(playername):
+    api_key = Apikey()
+    pubgcore = PUBGCore(api_key, "steam")
+    playerCore = pubgcore.players("player_names", playername)
+    return playerCore
+
+def Player_Lifetime_Stats(playercore):
+    playercoredata = playercore["data"]
+    for ids in playercoredata:
+        playerid = ids["id"]
+    api_key = Apikey()
+    pubgcore = PUBGCore(api_key, "steam")
+    player_Lfstats = pubgcore.lifetime(playerid)
+    return player_Lfstats
+
+def Player_Matches_Stats(playercore):
+    api_key = Apikey()
+    pubgcore = PUBGCore(api_key, "steam")
+    playercoredata = playercore["data"]
+    for data in playercoredata:
+        relationships = data["relationships"]
+        for matches in relationships["matches"]["data"]:
+            playerMatches = pubgcore.match(matches["id"])
+    return playerMatches
+
 def Player_Stats_Solo(playername):
     # API-KEY
     api_key = Apikey()
@@ -17,8 +42,3 @@ def Player_Stats_Solo(playername):
     return solo_tpp_stats, solo_fpp_stats
 
 
-def Player_Stats(playername):
-    api_key = Apikey()
-    pubgcore = PUBGCore(api_key, "pc-na")
-    shroud = pubgcore.players("player_names", "shroud")
-    print(shroud)

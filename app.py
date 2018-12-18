@@ -23,15 +23,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Vorgefertigte Variablen für Flask, um den Loginprozess programmiertechnisch einfacher zu gestalten
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-# Funktionen von data
-from data import *
-
 # Gavatar Hash
 from hashlib import md5
 
 # Flask Admin Imports
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+
+# PUBG Api Abrufe
+from data import *
 
 #from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required, current_user
 
@@ -54,6 +54,7 @@ Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
 
 
 '''
@@ -100,7 +101,18 @@ def about():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', name=current_user.username)
+    if current_user.pubgusername:
+        player = current_user.pubgusername
+        playercore = Player_Core(player)
+        playerLf = Player_Lifetime_Stats(playercore)
+        playerMatches = Player_Matches_Stats(playercore)
+    else:
+        flash("You haven't set a player in your settings! Go to settings to change your player", "danger")
+
+    return render_template('dashboard.html', name=current_user.username,
+    pubgusername=current_user.pubgusername,
+    playerLf = playerLf,
+    playerMatches = playerMatches)
 
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
