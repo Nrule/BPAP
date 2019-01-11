@@ -2,69 +2,107 @@
 {% block nav_dashboard %}active{% endblock %}
 
 {% block body %}
-
 <div class="jumbotron p-3 p-md-4 text-white rounded bg-dark">
-  <div class="col-md-6 px-0">
-    <h1 class="display-7">Willkommen, {{name}}</h1>
-    <p class="lead my-1">Dashboard mit allen Daten zu ihrem PUBG Spieler {{pubgusername}}</p>
-  </div>
+    <p class="lead my-1">Dashboard mit allen Daten zu ihrem hinterlegten PUBG Spieler {{pubgusername}}  </p>
 </div>
 
 <div class="container">
 
-<ul class="nav navbar-dark ">
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#lfstats" role="button" aria-expanded="true" aria-controls="lfstats">Lifetime Stats</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#matchstats" role="button" aria-expanded="false" aria-controls="matchstats">Matches</a>
-    </li>
-</ul>
-
-<!-- Line Chart (links) -->
-<div class="collapse" id="lfstats">
-  <div class="row">
-    <div class="col-sm-6">
-      <table class="table">
-        <tbody>
-            <tr>
-              <th>RankPoints</th>
-                <td>1</td>
-            </tr>
-            <tr>
-              <th>Kills</th>
-            </tr>
-            <tr>
-              <th>Assists</th>
-                <td>Carter</td>
-            </tr>
-            <tr>
-              <th>longestKill</th>
-                <td>johncarter@mail.com</td>
-            </tr>
-            <tr>
-              <th>longestTimeSurvived</th>
-                <td>johncarter@mail.com</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Lifetime Stats
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" data-toggle="collapse" data-target="#solo">Solo TPP</a>
+      <a class="dropdown-item" data-toggle="collapse" data-target="#solo-fpp">Solo FPP</a>
+      <a class="dropdown-item" data-toggle="collapse" data-target="#duo">Duo TPP</a>
+      <a class="dropdown-item" data-toggle="collapse" data-target="#duo-fpp">Duo FPP</a>
+      <a class="dropdown-item" data-toggle="collapse" data-target="#squad">Squad TPP</a>
+      <a class="dropdown-item" data-toggle="collapse" data-target="#squad-fpp">Squad FPP</a>
     </div>
+  </div>  
+  <!--button type="button"  class="btn btn-secondary" data-toggle="collapse" data-target="#lfstats" >Lifetime Stats</button-->
+  <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#matchstats">Matches</button>
+</div>
 
-    <!-- Radar Chart (rechts) -->
-    <div class="col-sm-6">
-      <canvas class="my-4 w-100" id="radardashboard"></canvas>
+<div id="collapses">
+  <!-- for loop to create the content of the modes -->
+  {% for mode in modes %}
+    {% if mode == 'duo' %}
+      {% set headername = 'Duo TPP'%}
+    {% elif mode == 'duo-fpp' %}
+      {% set headername = 'Duo FPP'%}
+    {% elif mode == 'solo' %}
+      {% set headername = 'Solo TPP'%}
+      {% set show = ' show' %}
+    {% elif mode == 'solo-fpp' %}
+      {% set headername = 'Solo FPP'%}
+    {% elif mode == 'squad' %}
+      {% set headername = 'Squad TPP'%}
+    {% elif mode == 'squad-fpp' %}
+      {% set headername = 'Squad FPP'%}
+    {% endif %}
+  <!-- Table for the data of the mode -->
+  <div class="collapse{{ show }}" id="{{ mode }}" data-parent = "#collapses">
+    <div class="card-header">
+      <h4>{{ headername }}</h4>
     </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ playerLf[mode]['kills'] }}</h4>
+            <p>Total Kills</p>
+            </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ '%0.2f' | format(playerLf[mode]['KD']|float) }}</h4>
+            <p>Overall KD</p>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ playerLf[mode]['wins'] }}</h4>
+            <p>Total Wins</p>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ playerLf[mode]['roundsPlayed'] }}</h4>
+            <p>Total Matches</p>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ playerLf[mode]['rankPoints']|round|int }}</h4>
+            <p>Rank Points</p>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ '%0.2f' | format(playerLf[mode]['rankPointsMatch']|float)  }}</h4>
+            <p>Rank Points / Match</p>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ '%0.2f' | format(100 *playerLf[mode]['winRate']|float) }} %</h4>
+            <p>Overall Winrate</p>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <h4>{{ playerLf[mode]['top10s'] }}</h4>
+            <p>Top 10 Placements</p>
+          </div>
+      </div>
+    </div>
+    <!-- Radar Chart -->
+    <div class="col-sm-6">
+      <canvas class="my-4 w-100" id="radar{{ mode }}"></canvas>
+    </div> 
+    <div class="col-sm-6">
+        <canvas class="my-4 w-100" id="polarAreaMatchType"></canvas>
+    </div> 
+    
   </div>
-</div>  
+  {% endfor %} 
 
 
-<div class="collapse" id="matchstats">
+<div class="collapse" id="matchstats" data-parent = "#collapses">
   <h2>Match Statistiken</h2>
           <div class="table-responsive">
+            <div></div>
             <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Datum</th>
                   <th>MatchID</th>
                   <th>Spielmodus</th>
@@ -101,5 +139,60 @@
           </div>
   </div>
 </div>
+</div>  
+{% endblock %}
 
+{% block script %}
+<script>
+{% for mode in modes %}
+
+var lifetimeradar = new Chart(document.getElementById("radar{{ mode }}"),{
+    "type":"radar",
+    "data":{"labels":["Win%","Top10%","Headshot%"],
+        "datasets":[{"label":"LifetimeStats-{{ mode }}",
+                "data":[{{ playerLf[mode]['winRate'] }},{{ playerLf[mode]['top10s%'] }},{{ playerLf[mode]['headshotRate'] }}],
+                "borderColor":"rgb(255, 99, 132)",
+                "pointBackgroundColor":"rgb(255, 99, 132)",
+                "pointBorderColor":"#fff",
+                "pointHoverBackgroundColor":"#fff",
+                "pointHoverBorderColor":"rgb(255, 99, 132)"}]
+    },"options":{"elements":{"line":{"tension":0,"borderWidth":3}},
+                "scale":{"ticks":{"suggestedMax":1}}}
+    }            
+  );
+
+{% endfor %}
+
+var polarAreaMatchType = new Chart(document.getElementById("polarAreaMatchType"),{
+    "type":"polarArea",
+    "data":{"labels":["Solo","SoloFPP","Duo","DuoFPP","Squad","SquadFPP"],
+        "datasets":[{"label":"Match Type Counts",
+                "data":[2,3,4,5,6,7],
+                "backgroundColor":[color(chartColors.red).alpha(0.5).rgbString(),
+						color(chartColors.orange).alpha(0.5).rgbString(),
+						color(chartColors.yellow).alpha(0.5).rgbString(),
+						color(chartColors.green).alpha(0.5).rgbString(),
+            color(chartColors.blue).alpha(0.5).rgbString(),
+            color(chartColors.purple).alpha(0.5).rgbString()
+          ]}]      
+    },
+    "options": {}
+});
+
+var polarAreaMatchTypess = new Chart(document.getElementById("polarAreaMatchTypess"),{
+    "type":"polarArea",
+    "data":{"labels":["Solo","SoloFPP","Duo","DuoFPP","Squad","SquadFPP"],
+        "datasets":[{"label":"Match Type Counts",
+                "data":[{{ playerLf['solo']['roundsPlayed'] }},
+                {{ playerLf['solo-fpp']['roundsPlayed'] }},
+                {{ playerLf['duo']['roundsPlayed'] }},
+                {{ playerLf['duo-fpp']['roundsPlayed'] }},
+                {{ playerLf['squad']['roundsPlayed'] }},
+                {{ playerLf['squad-fpp']['roundsPlayed'] }}],
+                "backgroundColor": ["#FF6384","#E67E22","#4BC0C0","#FFCE56","#E7E9ED","#36A2EB"]}]      
+    }
+});
+
+
+</script>
 {% endblock %}

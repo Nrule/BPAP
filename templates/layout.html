@@ -200,48 +200,10 @@
 
 <!-- Quelle: https://www.chartjs.org/docs/latest/charts/radar.html -->
 
-<script>
-    var myRadarChart = new Chart(document.getElementById("radartest"),{
-        "type":"radar",
-        "data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],
-            "datasets":[{"label":"My First Dataset",
-                    "data":[0.74,1.1,1.35,2.1,2.2,0.8,1.7],
-                    "borderColor":"rgb(255, 99, 132)",
-                    "pointBackgroundColor":"rgb(255, 99, 132)",
-                    "pointBorderColor":"#fff",
-                    "pointHoverBackgroundColor":"#fff",
-                    "pointHoverBorderColor":"rgb(255, 99, 132)"},
-
-                {"label":"My Second Dataset",
-                    "data":[0.8,1.2,1.9,2.5,2.1,0.89,1.8],
-                    "fill":true,
-                    "backgroundColor":"rgba(54, 162, 235, 0.2)",
-                    "borderColor":"rgb(54, 162, 235)",
-                    "pointBackgroundColor":"rgb(54, 162, 235)",
-                    "pointBorderColor":"#fff",
-                    "pointHoverBackgroundColor":"#fff",
-                    "pointHoverBorderColor":"rgb(54, 162, 235)"
-                }]
-        },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
-    });
-</script>
+{% block script %}{% endblock %}
 
 <script>
-var myRadarChart = new Chart(document.getElementById("radardashboard"),{
-    "type":"radar",
-    "data":{"labels":["Win%","Top10%","Sleeping","K/D Ratio","Headshot%"],
-        "datasets":[{"label":"LifetimeStats",
-                "data":[0.74,1.1,1.35,2.1,2.2],
-                "borderColor":"rgb(255, 99, 132)",
-                "pointBackgroundColor":"rgb(255, 99, 132)",
-                "pointBorderColor":"#fff",
-                "pointHoverBackgroundColor":"#fff",
-                "pointHoverBorderColor":"rgb(255, 99, 132)"}]
-    },"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}
-});
-</script>
 
-<script>
     var myRadarChart = new Chart(document.getElementById("comparisonRadar1"),{
         "type":"radar",
         "data":{"labels":["Wins","Matches","Kills","Assists","Best_Rank_Point","Boosts","Dbnos"],
