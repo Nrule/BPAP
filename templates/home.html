@@ -1,44 +1,248 @@
-{% extends 'layout.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% block nav_home %}active{% endblock %}
-
 {% block body %}
 
-    {% if current_user.is_authenticated %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
 
-    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
-         <h1 class="display-3">PUBG Stats</h1>
-         <p>Auf dieser Website kannst du deine PUBG Spieldaten darstellen und vergleichen.</p>
-         <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
-    </div>
+    <header class="header">
+      <div class="container">
 
-    {% else %}
+        <div class="body-particles">
+            <nav class="navbar navbar-expand-lg transparent fixed-top navbar-light">
+                <div class="container">
 
-    <div class="row">
-     <div class="col-md-8">
-        <div class="jumbotron text-white rounded bg-dark">
-            <h1 class="display-3">PUBG Stats</h1>
-            <p>Auf dieser Website kannst du deine PUBG Spieldaten darstellen und vergleichen.</p>
-            <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!--Titel des Projekts / Logo-->
+                    <a class="navbar-brand" href="/home">PUBG Stats</a>
+
+
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="{% block nav_home %}{% endblock %}">
+                            <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li class="{% block nav_dashboard %}{% endblock %}">
+                            <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="{% block nav_playersearch %}{% endblock %}">
+                            <a class="nav-link" href="/playersearch">Spielersuche</a>
+                        </li>
+                        <li class="{% block nav_comparison %}{% endblock %}">
+                            <a class="nav-link" href="/comparison">Spielervergleich</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                <ul class="navbar-nav navbar-right">
+                <li class="{% block nav_about %}{% endblock %}">
+                <a class="nav-link" href="/about">About</a>
+                </li>
+                    {% if current_user.is_authenticated %}
+                    {% if current_user.username == "admin" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                    {% endif %}
+                    <li class="{% block nav_settings %}{% endblock %}">
+                        <a class="nav-link" href="/settings">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href={{ url_for('logout') }}>Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="{% block nav_register %}{% endblock %}">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <li class="{% block nav_login %}{% endblock %}">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {% endif %}
+                    </ul>
+
+                </div>
+                </div>
+                </nav>
         </div>
-     </div>
 
-    <div class="col-md-4">
-        <div class="content-section">
-          <p class='text-muted'>
-            <form class="form-signin" method="POST" action="/login">
-              <h2 class="form-signin-heading">Please sign in</h2>
-              {{ form.hidden_tag() }}
-              {{ wtf.form_field(form.username) }}
-              {{ wtf.form_field(form.password) }}
-              {{ wtf.form_field(form.remember) }}
-              <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </form>
-          </p>
+      <div class="header__introduction">
+          <div class="display-2">PUBGStats</div>
+          <div class="display-4">ADOPT / ADAPT / IMPROVE</div>
+
+          {% if current_user.is_authenticated %}
+          {% else %}
+          <div class="buttons">
+            <p>
+              <p> </p>
+              <a href="#" class="btn-lg btn-warning my-2">Register</a>
+              <a href="#" class="btn-lg btn-secondary my-2">Login</a>
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+
+      <a class="header__scroll scroll" href="#documentation">
+        <span class="scroll__text">Documentation</span>
+        <img src="./static/Arrow-down.svg.png">
+      </a>
+
+      <canvas class="header__background" width="1903" height="694" style="width: 100%; height: 100%;"></canvas>
+    </header>
+
+    <div class="documentation">
+      <a name="documentation"></a>
+
+      <!--
+      <div class="container container--large">
+        <div class="installation">
+          <a name="installation"></a>
+
+          <h2>Installation</h2>
+          <p>To install particles.js you can <a href="https://github.com/marcbruederlin/particles.js/archive/master.zip">download</a> the latest version, install it via npm:</p>
+
+        <hr>
+
+        <div class="usage">
+          <a name="usage"></a>
+
+          <h2>Usage</h2>
+          <p>Include the minified JS file in your HTML (right before the closing body tag):</p>
+
+        <hr>
+
+        <div class="options">
+          <a name="options"></a>
+
+          <h2>Options</h2>
+
+          <div style="overflow-x:auto;">
+            <table class="table table--responsive">
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>selector</td>
+                  <td>string</td>
+                  <td>-</td>
+                  <td><em>Required:</em> CSS selector of your canvas element</td>
+                </tr>
+                <tr>
+                  <td>maxParticles</td>
+                  <td>integer</td>
+                  <td>100</td>
+                  <td><em>Optional:</em> Maximum amount of particles</td>
+                </tr>
+                <tr>
+                  <td>sizeVariations</td>
+                  <td>integer</td>
+                  <td>3</td>
+                  <td><em>Optional:</em> Amount of size variations</td>
+                </tr>
+                <tr>
+                  <td>speed</td>
+                  <td>integer</td>
+                  <td>0.5</td>
+                  <td><em>Optional:</em> Movement speed of the particles</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>string or string[]</td>
+                  <td>#000000</td>
+                  <td><em>Optional:</em> Color(s) of the particles and connecting lines</td>
+                </tr>
+                <tr>
+                  <td>minDistance</td>
+                  <td>integer</td>
+                  <td>120</td>
+                  <td><em>Optional:</em> Distance in px for connecting lines</td>
+                </tr>
+                <tr>
+                  <td>connectParticles</td>
+                  <td>boolean</td>
+                  <td>false</td>
+                  <td><em>Optional:</em> true/false if connecting lines should be drawn</td>
+                </tr>
+                <tr>
+                  <td>responsive</td>
+                  <td>array</td>
+                  <td>null</td>
+                  <td><em>Optional:</em> Array of objects containing breakpoints and options</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <a name="responsive-option"></a>
+          <h3>Responsive option</h3>
+
+          <p>With the responsive option, you can add or override options for different screen sizes:</p>
+
       </div>
     </div>
-    </div>
-    {% endif %}
+    -->
+
+      <!-- Container für Flashed Message -->
+      <div class="container">
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissable fade show" role="alert">
+		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
+      </div>
+
+    <script src="https://npmcdn.com/particlesjs@2.2.2/dist/particles.min.js"></script>
+    <script>
+      window.onload = function() {
+        Particles.init({
+          selector: '.header__background',
+          color: '#b77325',
+          maxParticles: 130,
+          connectParticles: true,
+          responsive: [
+            {
+              breakpoint: 768,
+              options: {
+                maxParticles: 80
+              }
+            }, {
+              breakpoint: 375,
+              options: {
+                maxParticles: 50
+              }
+            }
+          ]
+        });
+      };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
 
 
 {% endblock %}
