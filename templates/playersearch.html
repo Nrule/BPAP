@@ -12,12 +12,11 @@
 
 
 <section class="section">
-    <h5>SOLO-SUCHE</h5>
-        <form method="POST" action="/comparison">
+    <form method="POST" action="/playersearch">
             <div class="field is-grouped">
                 <p class="control is-expanded">
-                    <input type="hidden" name="playerOneName1" value="{% if player_one %}{{ player_one }}{% endif %}">
-                    <input class="form-control" name="playerName1" type="text" placeholder="Player Name">
+                    <input type="hidden" name="player" value="{% if player %}{{ player }}{% endif %}">
+                    <input class="form-control" name="playerName" type="text" placeholder="Player Name">
                 </p>
                 <p class="control">
                     <button class="btn btn-outline-primary">Search</button>
@@ -26,208 +25,75 @@
         </form>
 </section>
 
-        <div class="card-header">
-            <h4>Overall Stats</h4>
+<!-- for loop to create the content of the modes -->
+{% for mode in modes %}
+    {% if mode == 'duo' %}
+      {% set headername = 'Duo TPP'%}
+    {% elif mode == 'duo-fpp' %}
+      {% set headername = 'Duo FPP'%}
+    {% elif mode == 'solo' %}
+      {% set headername = 'Solo TPP'%}
+      {% set show = ' show' %}
+    {% elif mode == 'solo-fpp' %}
+      {% set headername = 'Solo FPP'%}
+    {% elif mode == 'squad' %}
+      {% set headername = 'Squad TPP'%}
+    {% elif mode == 'squad-fpp' %}
+      {% set headername = 'Squad FPP'%}
+    {% endif %}
+<div class="card-header">
+  <h4>{{ headername }}</h4>
+</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ playerLf[mode]['kills'] }}</h4>
+        <p>Total Kills</p>
         </div>
-         <div class="card-body">
-           <div class="row">
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Kills</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall KD</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Wins</p>
-
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Matches</p>
-             </div>
-
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Score</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Score / Match</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall Winrate</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Top Placements</p>
-             </div>
-           </div>
-             <hr>
-             <div class="panel panel-default">
-                <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems1"><i class="fa fa-chevron fa-fw" ></i> Grafiken</div>
-
-                <div class="collapse in" id="collapseOrderItems1">
-                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ '%0.2f' | format(playerLf[mode]['KD']|float) }}</h4>
+        <p>Overall KD</p>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ playerLf[mode]['wins'] }}</h4>
+        <p>Total Wins</p>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ playerLf[mode]['roundsPlayed'] }}</h4>
+        <p>Total Matches</p>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ playerLf[mode]['rankPoints']|round|int }}</h4>
+        <p>Rank Points</p>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ '%0.2f' | format(playerLf[mode]['rankPointsMatch']|float)  }}</h4>
+        <p>Rank Points / Match</p>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ '%0.2f' | format(100 *playerLf[mode]['winRate']|float) }} %</h4>
+        <p>Overall Winrate</p>
+      </div>
+      <div class="col-md-3 col-sm-4">
+        <h4>{{ playerLf[mode]['top10s'] }}</h4>
+        <p>Top 10 Placements</p>
+      </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems{{ mode }}"><i class="fa fa-chevron fa-fw" data-toggle="collapse" data-target="#collapseOrderItems{{ mode }}"></i> Grafiken</div>
+    </div>
+    <div class="collapse show" id="collapseOrderItems{{ mode }}">
+        <div class="row">
+            <div class>
+                <canvas id="radar{{ mode }}"></canvas>
             </div>
-         </div>
-
-
-        <div class="card-header">
-            <h4>Solo Stats</h4>
+            <div class>
+                <canvas id="polarAreaMatchType{{ mode }}"></canvas> 
+            </div> 
         </div>
-         <div class="card-body">
-           <div class="row">
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Kills</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall KD</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Wins</p>
-
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Matches</p>
-             </div>
-
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Score</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Score / Match</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall Winrate</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Top Placements</p>
-             </div>
-           </div>
-             <hr>
-             <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems2"><i class="fa fa-chevron fa-fw" ></i> Grafiken</div>
-
-                        <div class="collapse in" id="collapseOrderItems2">
-                            <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                        </div>
-             </div>
-         </div>
-
-
-        <div class="card-header">
-            <h4>Duo Stats</h4>
-        </div>
-         <div class="card-body">
-           <div class="row">
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Kills</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall KD</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Wins</p>
-
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Matches</p>
-             </div>
-
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Score</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Score / Match</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall Winrate</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Top Placements</p>
-             </div>
-           </div>
-             <hr>
-               <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems3"><i class="fa fa-chevron fa-fw" ></i> Grafiken</div>
-
-                        <div class="collapse in" id="collapseOrderItems3">
-                            <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                        </div>
-                </div>
-         </div>
-
-
-        <div class="card-header">
-            <h4>Squad Stats</h4>
-        </div>
-         <div class="card-body">
-           <div class="row">
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Kills</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall KD</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Wins</p>
-
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Matches</p>
-             </div>
-
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Total Score</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Score / Match</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Overall Winrate</p>
-             </div>
-             <div class="col-md-3 col-sm-4">
-               <h4>WERT</h4>
-               <p>Top Placements</p>
-             </div>
-           </div>
-             <hr>
-             <div class="panel panel-default">
-               <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems4"><i class="fa fa-chevron fa-fw" ></i> Grafiken</div>
-
-                    <div class="collapse in" id="collapseOrderItems4">
-                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                    </div>
-           </div>
-         </div>
+    </div>
+  </div>
+{% endfor %}
 
 
 <!-- CSS für Panel -->
@@ -239,5 +105,46 @@
     content: "\f054";
 }
 </style>
+
+{% endblock %}
+
+{% block script %}
+<script>
+{% for mode in modes %}
+
+var lifetimeradar = new Chart(document.getElementById("radar{{ mode }}"),{
+    "type":"radar",
+    "data":{"labels":["Win%","Top10%","Headshot%"],
+        "datasets":[{"label":"LifetimeStats-{{ mode }}",
+                "data":[{{ playerLf[mode]['winRate'] }},{{ playerLf[mode]['top10s%'] }},{{ playerLf[mode]['headshotRate'] }}],
+                "borderColor":"rgb(255, 99, 132)",
+                "pointBackgroundColor":"rgb(255, 99, 132)",
+                "pointBorderColor":"#fff",
+                "pointHoverBackgroundColor":"#fff",
+                "pointHoverBorderColor":"rgb(255, 99, 132)"}]
+    },"options":{"elements":{"line":{"tension":0,"borderWidth":3}},
+                "scale":{"ticks":{"suggestedMax":1}}}
+    }            
+  );
+
+  var polarAreaMatchType = new Chart(document.getElementById("polarAreaMatchType{{ mode }}"),{
+    "type":"polarArea",
+    "data":{"labels":["Solo","SoloFPP","Duo","DuoFPP","Squad","SquadFPP"],
+        "datasets":[{"label":"Match Type Counts",
+                "data":[{{ playerLf['solo']['roundsPlayed'] }},
+                {{ playerLf['solo-fpp']['roundsPlayed'] }},
+                {{ playerLf['duo']['roundsPlayed'] }},
+                {{ playerLf['duo-fpp']['roundsPlayed'] }},
+                {{ playerLf['squad']['roundsPlayed'] }},
+                {{ playerLf['squad-fpp']['roundsPlayed'] }}],
+                "backgroundColor": ["#FF6384","#E67E22","#4BC0C0","#FFCE56","#E7E9ED","#36A2EB"]}]      
+    }, "options": { "responsive": true
+    }
+});
+
+{% endfor %}
+
+</script>
+
 
 {% endblock %}
