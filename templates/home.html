@@ -83,12 +83,27 @@
           <div class="buttons">
             <p>
               <p> </p>
-              <a href="#" class="btn-lg btn-warning my-2">Register</a>
-              <a href="#" class="btn-lg btn-secondary my-2">Login</a>
+              <a href="/register" class="btn-lg btn-warning my-2">Register</a>
+              <a href="/login" class="btn-lg btn-secondary my-2">Login</a>
             </p>
           </div>
           {% endif %}
         </div>
+
+              <!-- Container für Flashed Message -->
+              <div class="container">
+
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissable fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                  {% endwith %}
+              </div>
       </div>
 
 
@@ -198,20 +213,6 @@
     </div>
     -->
 
-      <!-- Container für Flashed Message -->
-      <div class="container">
-
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissable fade show" role="alert">
-		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ message }}
-                </div>
-                {% endfor %}
-            {% endif %}
-          {% endwith %}
-      </div>
 
     <script src="https://npmcdn.com/particlesjs@2.2.2/dist/particles.min.js"></script>
     <script>
