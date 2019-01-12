@@ -79,21 +79,23 @@
         <p>Top 10 Placements</p>
       </div>
     </div>
-  </div>
     <div class="panel">
         <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems{{ mode }}"><i class="fa fa-chevron fa-fw" data-toggle="collapse" data-target="#collapseOrderItems{{ mode }}"></i> Grafiken</div>
     </div>
+    <div class="collapse" id="collapseOrderItems{{ mode }}">
 
-    <div class="panel-body" id="collapseOrderItems{{ mode }}">
+    <div class="panel-body">
         <div class="row">
-            <div class="card col-md-6">
+            <div class="card border-light col-md-6">
                 <canvas id="radar{{ mode }}"></canvas>
             </div>
-            <div class="card col-md-6">
-                <canvas id="polarAreaMatchType{{ mode }}"></canvas> 
-            </div> 
+            <div class="card border-light col-md-6">
+                <canvas id="polarAreaMatchType{{ mode }}"></canvas>
+            </div>
         </div>
     </div>
+    </div>
+  </div>
 {% endfor %}
 
 
