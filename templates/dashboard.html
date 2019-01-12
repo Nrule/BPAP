@@ -6,8 +6,6 @@
     <p class="lead my-1">Dashboard mit allen Daten zu ihrem hinterlegten PUBG Spieler {{pubgusername}}  </p>
 </div>
 
-<div class="container">
-
 <div class="btn-group" role="group" aria-label="Basic example">
   <div class="btn-group" role="group">
     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,18 +80,23 @@
             <h4>{{ playerLf[mode]['top10s'] }}</h4>
             <p>Top 10 Placements</p>
           </div>
+
       </div>
     </div>
+
+  
     <!-- Radar Chart -->
-    <div class="col-sm-6">
-      <canvas class="my-4 w-100" id="radar{{ mode }}"></canvas>
-    </div> 
-    <div class="col-sm-6">
-        <canvas class="my-4 w-100" id="polarAreaMatchType"></canvas>
-    </div> 
-    
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="radar{{ mode }}" data-parent="#collapses"></canvas>
+      </div>
+      <div class="col-md-6">
+          <canvas id="polarAreaMatchType{{ mode }}"></canvas> 
+      </div> 
+    </div>
   </div>
-  {% endfor %} 
+{% endfor %} 
+
 
 
 <div class="collapse" id="matchstats" data-parent = "#collapses">
@@ -139,10 +142,21 @@
           </div>
   </div>
 </div>
-</div>  
+
+
+<!-- CSS für Panel -->
+<style>
+  .panel-heading .fa-chevron:after {
+      content: "\f078";
+  }
+  .panel-heading.collapsed .fa-chevron:after {
+      content: "\f054";
+  }
+</style>
 {% endblock %}
 
 {% block script %}
+
 <script>
 {% for mode in modes %}
 
@@ -161,25 +175,7 @@ var lifetimeradar = new Chart(document.getElementById("radar{{ mode }}"),{
     }            
   );
 
-{% endfor %}
-
-var polarAreaMatchType = new Chart(document.getElementById("polarAreaMatchType"),{
-    "type":"polarArea",
-    "data":{"labels":["Solo","SoloFPP","Duo","DuoFPP","Squad","SquadFPP"],
-        "datasets":[{"label":"Match Type Counts",
-                "data":[2,3,4,5,6,7],
-                "backgroundColor":[color(chartColors.red).alpha(0.5).rgbString(),
-						color(chartColors.orange).alpha(0.5).rgbString(),
-						color(chartColors.yellow).alpha(0.5).rgbString(),
-						color(chartColors.green).alpha(0.5).rgbString(),
-            color(chartColors.blue).alpha(0.5).rgbString(),
-            color(chartColors.purple).alpha(0.5).rgbString()
-          ]}]      
-    },
-    "options": {}
-});
-
-var polarAreaMatchTypess = new Chart(document.getElementById("polarAreaMatchTypess"),{
+  var polarAreaMatchType = new Chart(document.getElementById("polarAreaMatchType{{ mode }}"),{
     "type":"polarArea",
     "data":{"labels":["Solo","SoloFPP","Duo","DuoFPP","Squad","SquadFPP"],
         "datasets":[{"label":"Match Type Counts",
@@ -190,9 +186,13 @@ var polarAreaMatchTypess = new Chart(document.getElementById("polarAreaMatchType
                 {{ playerLf['squad']['roundsPlayed'] }},
                 {{ playerLf['squad-fpp']['roundsPlayed'] }}],
                 "backgroundColor": ["#FF6384","#E67E22","#4BC0C0","#FFCE56","#E7E9ED","#36A2EB"]}]      
+    }, "options": { "responsive": true
     }
 });
 
+{% endfor %}
 
 </script>
+
+
 {% endblock %}

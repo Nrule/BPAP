@@ -154,7 +154,7 @@ def comparison1():
         player_one = request.form.get('playerOneName1')
 
         if player_one:
-            player_two = request.form.get('playerName1')
+            player_two = request.form.get('playerName2')
         else:
             player_one = request.form.get('playerName1')
 
@@ -174,8 +174,20 @@ def comparison1():
 @app.route('/playersearch', methods=['GET', 'POST'])
 @login_required
 def playersearch():
+    player = None
+    playerLf = []
+    modes = []
 
-    return render_template('playersearch.html')
+    if request.method == 'POST':
+        player = request.form.get('player')
+        player = request.form.get('playerName')
+        playercore = Player_Core(player)
+        playerLf = Player_Lifetime_Stats(playercore)
+        modes = playerLf.keys()
+
+    return render_template('playersearch.html', player=player,    
+                            playerLf = playerLf,
+                            modes = modes)
 
 
 @app.route('/login', methods=['GET', 'POST'])
