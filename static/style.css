@@ -4,6 +4,7 @@
     background-size: auto auto;
     background-size: cover;
 }
+
 .header .container{
     z-index: 10;
 }
@@ -34,7 +35,18 @@
     top: 0px;
     left: 0px;
     z-index: 0;
-    background: dimgrey;
+    background: slategrey;
+}
+
+.header .header__background2{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+    background: ghostwhite;
 }
 
 .header .header__scroll {
@@ -56,6 +68,13 @@
   z-index: 100;
 }
 
+.body-particles_layout{
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
 .navbar.transparent. {
     border-width: 0px;
     -webkit-box-shadow: 0px 0px;
@@ -63,6 +82,14 @@
 }
 
 .documentation {
-    padding-top: 50px;
+    padding-top: 0px;
+}
 
+.container_register{
+    padding-top: 10%;
+    color: azure;
+    color: black;
+    margin: auto;
+    text-align: center;
+    width: 400px;
 }

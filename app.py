@@ -135,7 +135,7 @@ def settings():
         form.email.data = current_user.email
         form.pubgusername.data = current_user.pubgusername
 
-        image_file = url_for('static', filename='Player1.jpg')
+        image_file = url_for('static', filename='player-default.svg')
     return render_template('settings.html', form=form,
                            image_file=image_file,
                            name=current_user.username,
@@ -147,36 +147,37 @@ def settings():
 def comparison1():
     player_one = None
     player_two = None
-    player_one_solo_fpp_stats = {}
-    player_two_solo_fpp_stats = {}
+    playerLf1 = []
+    playerLf2 = []
 
     if request.method == 'POST':
         player_one = request.form.get('playerOneName1')
 
         if player_one:
-            player_two = request.form.get('playerName2')
+            player_two = request.form.get('playerName1')
         else:
             player_one = request.form.get('playerName1')
 
-        player_one_solo_fpp_stats = Player_Stats_Solo(player_one)[1]
+        playercore = Player_Core(player_one)
+        playerLf1 = Player_Lifetime_Stats(playercore)
 
         if player_two:
-            player_two_solo_fpp_stats = Player_Stats_Solo(player_two)[1]
+            playercore = Player_Core(player_two)
+            playerLf2 = Player_Lifetime_Stats(playercore)
 
-    image_file1 = url_for('static', filename='Player1.jpg')
-    image_file2 = url_for('static', filename='Player2.jpg')
+    image_file1 = url_for('static', filename='player-default.svg')
+    image_file2 = url_for('static', filename='player-default.svg')
 
     return render_template('comparison.html', player_one=player_one, player_two=player_two,
-                           player_one_solo_fpp_stats=player_one_solo_fpp_stats,
-                           player_two_solo_fpp_stats=player_two_solo_fpp_stats,
-                           image_file1=image_file1, image_file2=image_file2, name=current_user.username)
+                           playerLf1 = playerLf1, playerLf2 = playerLf2, image_file1=image_file1,
+                           image_file2=image_file2, name=current_user.username)
 
 @app.route('/playersearch', methods=['GET', 'POST'])
 @login_required
 def playersearch():
     player = None
-    playerLf = []
-    modes = []
+    playerLf = {}
+    modes = {}
 
     if request.method == 'POST':
         player = request.form.get('player')
