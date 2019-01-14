@@ -3,7 +3,7 @@
 {% block nav_settings %}active{% endblock %}
 
 {% block body %}
-  <div class="jumbotron p-3 p-md-4 text-white rounded bg-dark">
+  <div class="jumbotron jumbotron-fluid p-3 p-md-4 text-white bg-dark">
         <div class="col-md-6 px-0">
           <h1 class="display-7">Account-Settings</h1>
           <p class="lead my-1">Anpassung der Accounteinstellungen</p>
@@ -79,7 +79,7 @@
             {{ wtf.form_field(form.username) }}
             {{ wtf.form_field(form.email) }}
             {{ wtf.form_field(form.pubgusername) }}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+            <button class="btn btn-lg btn-warning btn-block" type="submit">Update</button>
         </form>
     </div>
     </div>

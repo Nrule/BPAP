@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>MyFlaskApp</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/style.css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!-- Graphs from Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
@@ -12,18 +13,21 @@
   </head>
   <body>
 
+
+  <header class="header">
+    <div class="body-particles_layout">
     <!-- Navigationsbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-        
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
-        
+
             <!--Titel des Projekts / Logo-->
             <a class="navbar-brand" href="/home">PUBG Stats</a>
-        
-        
+
+
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="{% block nav_home %}{% endblock %}">
@@ -41,11 +45,11 @@
                 </li>
                 {% endif %}
             </ul>
-        
+
         <ul class="navbar-nav navbar-right">
         <li class="{% block nav_about %}{% endblock %}">
-        <a class="nav-link" href="/about">About</a>  
-        </li>  
+        <a class="nav-link" href="/about">About</a>
+        </li>
             {% if current_user.is_authenticated %}
             {% if current_user.username == "admin" %}
             <li class="nav-item">
@@ -67,12 +71,12 @@
             </li>
             {% endif %}
             </ul>
-        
+
         </div>
         </div>
         </nav>
 
-      <!-- Container für Flashed Message -->  
+      <!-- Container für Flashed Message -->
       <div class="container-fluid">
 
           {% with messages = get_flashed_messages(with_categories=true) %}
@@ -88,6 +92,36 @@
 
           {% block body %}{% endblock %}
       </div>
+    </div>
+
+
+    <canvas class="header__background2" width="1903" height="694" style="width: 100%; height: 100%;"></canvas>
+  </header>
+
+    <script src="https://npmcdn.com/particlesjs@2.2.2/dist/particles.min.js"></script>
+    <script>
+      window.onload = function() {
+        Particles.init({
+          selector: '.header__background2',
+          color: '#f6bd1f',
+          maxParticles: 130,
+          connectParticles: true,
+          responsive: [
+            {
+              breakpoint: 768,
+              options: {
+                maxParticles: 80
+              }
+            }, {
+              breakpoint: 375,
+              options: {
+                maxParticles: 50
+              }
+            }
+          ]
+        });
+      };
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

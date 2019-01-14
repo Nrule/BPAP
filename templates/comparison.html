@@ -3,23 +3,21 @@
 {% block nav_comparison %}active{% endblock %}
 
 {% block body %}
-<div class="jumbotron p-3 p-md-4 text-white rounded bg-dark">
+<div class="jumbotron jumbotron-fluid p-3 p-md-4 text-white bg-dark">
     <div class="col-md-6 px-0">
         <h1 class="display-7">Spielervergleich!</h1>
         <p class="lead my-1">Vergleich von zwei PUBG-Spielern</p>
     </div>
 </div>
 
-<hr>
-
 </div>
 
- <!-- Player One Auswahl -->
 
-<div class="container">
+ <!-- Player One Auswahl -->
+<div class="container-fluid">
 <div class="row">
   <div class="col-sm-6">
-      {% if player_one %}
+    {% if player_one %}
     <div class="card">
       <div class="card-body">
           <div class="media">
@@ -27,32 +25,8 @@
                 <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file1 }}">
             </div>
             <div class="media-body">
-                <h4 class="media-heading">{{ player_one }}</h4>
-                <h4>Rank: "******"</h4>
-                            <div class="container-fluid">
-                <div class="row">
-                 <div class="form-group">
-                    <select class="form-control" id="modus_player_one">
-                    <option>Solo</option>
-                    <option>Duo</option>
-                    <option>Squad</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="sicht_player_one">
-                    <option>FPP</option>
-                    <option>TPP</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="plattform_player_one">
-                    <option>Steam</option>
-                    <option>pc-eu</option>
-                    <option>pc-na</option>
-                    </select>
-                </div>
-                </div>
-                </div>
+                <h1 class="mb-0">{{ player_one }}</h1>
+                <h1>(Spieler 1)</h1>
             </div>
         </div>
       </div>
@@ -66,13 +40,19 @@
             </div>
             <div class="media-body">
                 <h4 class="media-heading">Add Player 1</h4>
-                <p class="control is-expanded">
-                    <input type="hidden" name="playerOneName" value="{% if player_one %}{{ player_one }}{% endif %}">
-                    <input class="form-control" name="playerName1" type="text" placeholder="Player Name">
-                </p>
-                <p class="control">
-                    <button class="btn btn-outline-primary">Search</button>
-                </p>
+                <section class="section">
+                    <form method="POST" action="/comparison">
+                        <div class="field is-grouped">
+                            <p class="control is-expanded">
+                                <input type="hidden" name="playerOneName1" value="{% if player_one %}{{ player_one }}{% endif %}">
+                                <input class="form-control" name="playerName1" type="text" placeholder="Player Name">
+                            </p>
+                            <p class="control">
+                                <button class="btn btn-warning">Search</button>
+                            </p>
+                        </div>
+                    </form>
+                </section>
             </div>
             </div>
           </div>
@@ -81,7 +61,6 @@
   </div>
 
   <!-- Player Two Auswahl -->
-
   <div class="col-sm-6">
       {% if player_two %}
           <div class="card">
@@ -91,37 +70,15 @@
                 <img class="rounded-circle account-img"  style="width: 128px; height: 128px;" src="{{ image_file2 }}">
             </div>
             <div class="media-body">
-                <h4 class="media-heading">{{ player_two }}</h4>
-                <h4>Rank: "******"</h4>
-                <div class="container-fluid">
-                <div class="row">
-                 <div class="form-group">
-                    <select class="form-control" id="sicht_player_two">
-                    <option>Solo</option>
-                    <option>Duo</option>
-                    <option>Squad</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="modus_player_two">
-                    <option>FPP</option>
-                    <option>TPP</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="plattform_player_two">
-                    <option>Steam</option>
-                    <option>pc-eu</option>
-                    <option>pc-na</option>
-                    </select>
-                </div>
-                </div>
+                <h1 class="mb-0">{{ player_two }}</h1>
+                <h1>(Spieler 2)</h1>
+                <img src="/static/cross.svg" width="20px">
                 </div>
             </div>
         </div>
       </div>
     </div>
-      {% else %}
+    {% else %}
     <div class="card">
       <div class="card-body">
           <div class="media">
@@ -130,13 +87,19 @@
             </div>
             <div class="media-body">
                 <h4 class="media-heading">Add Player 2</h4>
-                <p class="control is-expanded">
-                    <input type="hidden" name="playerTwoName" value="{% if player_one %}{{ player_one }}{% endif %}">
-                    <input class="form-control" name="playerName2" type="text" placeholder="Player Name">
-                </p>
-                <p class="control">
-                    <button class="btn btn-outline-primary">Search</button>
-                </p>
+                <section class="section">
+                            <form method="POST" action="/comparison">
+                                <div class="field is-grouped">
+                                    <p class="control is-expanded">
+                                        <input type="hidden" name="playerOneName1" value="{% if player_one %}{{ player_one }}{% endif %}">
+                                        <input class="form-control" name="playerName1" type="text" placeholder="Player Name">
+                                    </p>
+                                    <p class="control">
+                                        <button class="btn btn-warning">Search</button>
+                                    </p>
+                                </div>
+                            </form>
+                </section>
             </div>
         </div>
       </div>
@@ -145,284 +108,1646 @@
   </div>
 </div>
 
-  <!-- Player One Tabelle -->
-
 <hr>
- <div class="row">
-  <div class="col-sm-6">
-      {% if player_one %}
-    <div class="card">
-      <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                <tr>
-                    <th style="width: 2%"></th>
-                    <th style="width: 70%"></th>
-                    <th style="width: 28%"></th>
-                </tr>
-                </thead>
-              <tbody>
-                <tr>
-                  {% if player_two_solo_fpp_stats['rounds_played'] != null %}
-                    {% if player_one_solo_fpp_stats ['rounds_played'] > player_two_solo_fpp_stats['rounds_played'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_one_solo_fpp_stats['rounds_played'] < player_two_solo_fpp_stats['rounds_played'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                  {% else %}
-                   <td class="table-dark"></td>
-                  {% endif %}
-                  <td><h5>Matches Played</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['rounds_played']}}</td>
-                </tr>
-                <tr>
-                  {% if player_two_solo_fpp_stats['wins'] != null %}
-                    {% if player_one_solo_fpp_stats ['wins'] > player_two_solo_fpp_stats['wins'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_one_solo_fpp_stats['wins'] < player_two_solo_fpp_stats['wins'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                  {% else %}
-                   <td class="table-dark"></td>
-                  {% endif %}
-                  <td><h5>Wins</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['wins']}}</td>
-                </tr>
-                <tr>
-                  {% if player_two_solo_fpp_stats['top_10s'] != null %}
-                    {% if player_one_solo_fpp_stats ['top_10s'] > player_two_solo_fpp_stats['top_10s'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_one_solo_fpp_stats['top_10s'] < player_two_solo_fpp_stats['top_10s'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                  {% else %}
-                   <td class="table-dark"></td>
-                  {% endif %}
-                  <td><h5>Top 10s</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['top_10s']}}</td>
-                </tr>
-                <tr>
-                  {% if player_two_solo_fpp_stats['kills'] != null %}
-                    {% if player_one_solo_fpp_stats ['kills'] > player_two_solo_fpp_stats['kills'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_one_solo_fpp_stats['kills'] < player_two_solo_fpp_stats['kills'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                  {% else %}
-                   <td class="table-dark"></td>
-                  {% endif %}
-                  <td><h5>Kills</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['kills']}}</td>
-                </tr>
-                <tr>
-                  {% if player_two_solo_fpp_stats['damage_dealt'] != null %}
-                    {% if player_one_solo_fpp_stats ['damage_dealt'] > player_two_solo_fpp_stats['damage_dealt'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_one_solo_fpp_stats['damage_dealt'] < player_two_solo_fpp_stats['damage_dealt'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                  {% else %}
-                   <td class="table-dark"></td>
-                  {% endif %}
-                  <td><h5>Damage_dealt</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['damage_dealt']}}</td>
-                </tr>
-                <tr>
-                  {% if player_two_solo_fpp_stats['longest_time_survived'] != null %}
-                    {% if player_one_solo_fpp_stats ['longest_kill'] > player_two_solo_fpp_stats['longest_kill'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_one_solo_fpp_stats['longest_kill'] < player_two_solo_fpp_stats['longest_kill'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                  {% else %}
-                   <td class="table-dark"></td>
-                  {% endif %}
-                  <td><h5>Longest_kill</h5></td>
-                  <td>{{ player_one_solo_fpp_stats ['longest_kill']}}</td>
-                </tr>
-              </tbody>
-            </table>
-      </div>
+
+<div class="container-fluid" style="text-align: center">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/static/player-default.svg" width="125">
+                    <div class="card-body">
+                        <button class="btn btn-lg btn-warning" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" id="solo_fpp" ng-click="levelCD()">
+                          Modus: Solo-TPP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/static/player-default.svg" width="125">
+                    <div class="card-body">
+                        <button class="btn btn-lg btn-warning" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+                          Modus: Solo-FPP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/static/player-default.svg" width="125">
+                    <div class="card-body">
+                        <button class="btn btn-lg btn-warning" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseOne">
+                            Modus: Duo-TPP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/static/player-default.svg" width="125">
+                    <div class="card-body">
+                        <button class="btn btn-lg btn-warning" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseOne">
+                            Modus: Duo-FPP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/static/player-default.svg" width="125">
+                    <div class="card-body">
+                        <button class="btn btn-lg btn-warning" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseOne">
+                            Modus: Squad-TPP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/static/player-default.svg" width="125">
+                    <div class="card-body">
+                        <button class="btn btn-lg btn-warning" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseOne">
+                            Modus: Squad-FPP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-      {% endif %}
 </div>
 
-     <!-- Player Two Tabelle -->
 
-    <div class="col-sm-6">
-        {% if player_two %}
-    <div class="card">
-      <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                <tr>
-                    <th style="width: 70%"></th>
-                    <th style="width: 28%"></th>
-                    <th style="width: 2%"></th>
-                </tr>
-                </thead>
-              <tbody>
-                <tr>
-                  <td><h5>Matches Played</h5></td>
-                  <td>{{ player_two_solo_fpp_stats ['rounds_played']}}</td>
-                    {% if player_two_solo_fpp_stats ['rounds_played'] > player_one_solo_fpp_stats['rounds_played'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_two_solo_fpp_stats['rounds_played'] < player_one_solo_fpp_stats['rounds_played'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
+<!-- Accordion Solo -->
+<div class="container-fluid">
+    <div id="accordionSolo">
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSolo">
+          <div class="card-body">
+
+             <!-- Player One Tabelle -->
+             <div class="row">
+              <div class="col-sm-6">
+                {% if player_one %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%"></th>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              {% if playerLf1['kills'] != null %}
+                                {% if playerLf1['kills'] > playerLf2['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['kills'] < playerLf2['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf1 ['solo']['kills'] }}</td>
+                            </tr>
+                          <tr>
+                              {% if playerLf1['KD'] != null %}
+                                {% if playerLf1['KD'] > playerLf2['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['KD'] < playerLf2['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['solo']['KD']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['wins'] != null %}
+                                {% if playerLf1['wins'] > playerLf2['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['wins'] < playerLf2['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf1['solo']['wins'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['roundsPlayed'] != null %}
+                                {% if playerLf1['roundsPlayed'] > playerLf2['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['roundsPlayed'] < playerLf2['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf1['solo']['roundsPlayed'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPoints'] != null %}
+                                {% if playerLf1['rankPoints'] > playerLf2['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPoints'] < playerLf2['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf1['solo']['rankPoints']|round|int }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPointsMatch'] != null %}
+                                {% if playerLf1['rankPointsMatch'] > playerLf2['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPointsMatch'] < playerLf2['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['solo']['rankPointsMatch']|float)  }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['winRate'] != null %}
+                                {% if playerLf1['winRate'] > playerLf2['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['winRate'] < playerLf2['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf1['solo']['winRate']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['top10s'] != null %}
+                                {% if playerLf1['top10s'] > playerLf2['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['top10s'] < playerLf2['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf1['solo']['top10s'] }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+              {% endif %}
+              </div>
+
+                  <div class="col-sm-6">
+                    {% if player_two %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                                <th style="width: 2%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf2['solo']['kills'] }}</td>
+                                {% if playerLf2['solo']['kills'] > playerLf1['solo']['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['kills'] < playerLf1['solo']['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['solo']['KD']|float) }}</td>
+                                {% if playerLf2['solo']['KD'] > playerLf1['solo']['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['KD'] < playerLf1['solo']['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf2['solo']['wins'] }}</td>
+                                {% if playerLf2['solo']['wins'] > playerLf1['solo']['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['wins'] < playerLf1['solo']['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf2['solo']['roundsPlayed'] }}</td>
+                                {% if playerLf2['solo']['roundsPlayed'] > playerLf1['solo']['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['roundsPlayed'] < playerLf1['solo']['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf2['solo']['rankPoints']|round|int }}</td>
+                                {% if playerLf2['solo']['rankPoints'] > playerLf1['solo']['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['rankPoints'] < playerLf1['solo']['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['solo']['rankPointsMatch']|float)  }}</td>
+                                {% if playerLf2['solo']['rankPointsMatch'] > playerLf1['solo']['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['rankPointsMatch'] < playerLf1['solo']['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf2['solo']['winRate']|float) }}</td>
+                                {% if playerLf2['solo']['winRate'] > playerLf1['solo']['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['winRate'] < playerLf1['solo']['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf2['solo']['top10s'] }}</td>
+                                {% if playerLf2['solo']['top10s'] > playerLf1['solo']['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo']['top10s'] < playerLf1['solo']['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
                     {% endif %}
-                </tr>
-                <tr>
-                  <td><h5>Wins</h5></td>
-                  <td>{{ player_two_solo_fpp_stats ['wins']}}</td>
-                    {% if player_two_solo_fpp_stats ['wins'] > player_one_solo_fpp_stats['wins'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_two_solo_fpp_stats['wins'] < player_one_solo_fpp_stats['wins'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                </tr>
-                <tr>
-                  <td><h5>Top 10s</h5></td>
-                  <td>{{ player_two_solo_fpp_stats ['top_10s']}}</td>
-                    {% if player_two_solo_fpp_stats ['top_10s'] > player_one_solo_fpp_stats['top_10s'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_two_solo_fpp_stats['top_10s'] < player_one_solo_fpp_stats['top_10s'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                </tr>
-                <tr>
-                  <td><h5>Kills</h5></td>
-                  <td>{{ player_two_solo_fpp_stats ['kills']}}</td>
-                    {% if player_two_solo_fpp_stats ['kills'] > player_one_solo_fpp_stats['kills'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_two_solo_fpp_stats['kills'] < player_one_solo_fpp_stats['kills'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                </tr>
-                <tr>
-                  <td><h5>Damage_dealt</h5></td>
-                  <td>{{ player_two_solo_fpp_stats ['damage_dealt']}}</td>
-                    {% if player_two_solo_fpp_stats ['damage_dealt'] > player_one_solo_fpp_stats['damage_dealt'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_two_solo_fpp_stats['damage_dealt'] < player_one_solo_fpp_stats['damage_dealt'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                </tr>
-                <tr>
-                  <td><h5>Longest_kill</h5></td>
-                  <td>{{ player_two_solo_fpp_stats ['longest_kill']}}</td>
-                    {% if player_two_solo_fpp_stats ['longest_kill'] > player_one_solo_fpp_stats['longest_kill'] %}
-                    <td class="bg-success"></td>
-                    {% elif player_two_solo_fpp_stats['longest_kill'] < player_one_solo_fpp_stats['longest_kill'] %}
-                    <td class="bg-danger"></td>
-                    {% else %}
-                    <td class="table-dark"></td>
-                    {% endif %}
-                </tr>
-              </tbody>
-            </table>
-      </div>
-      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
     </div>
-        {% endif %}
-  </div>
+    <!-- Accordion 1 Ende -->
 </div>
 
-<hr>
+<!-- Accordion Solo FPP -->
+<div class="container-fluid">
+    <div id="accordionSoloFPP">
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSoloFPP">
+          <div class="card-body">
 
-    <div class="card">
-        {% if player_one %}{% if player_two %}
-      <div class="card-body">
-              <h4>Form</h4>
-          <p><h6>Sliding window of rating 1.0 - 1 day increments</h6></p>
-          <canvas class="my-4 w-100" id="myChartComparison"></canvas>
-      </div>
-        {% endif %}
-        {% endif %}
+             <!-- Player One Tabelle -->
+             <div class="row">
+              <div class="col-sm-6">
+                {% if player_one %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%"></th>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              {% if playerLf1['kills'] != null %}
+                                {% if playerLf1['kills'] > playerLf2['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['kills'] < playerLf2['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf1 ['solo-fpp']['kills'] }}</td>
+                            </tr>
+                          <tr>
+                              {% if playerLf1['KD'] != null %}
+                                {% if playerLf1['KD'] > playerLf2['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['KD'] < playerLf2['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['solo-fpp']['KD']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['wins'] != null %}
+                                {% if playerLf1['wins'] > playerLf2['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['wins'] < playerLf2['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf1['solo-fpp']['wins'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['roundsPlayed'] != null %}
+                                {% if playerLf1['roundsPlayed'] > playerLf2['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['roundsPlayed'] < playerLf2['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf1['solo-fpp']['roundsPlayed'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPoints'] != null %}
+                                {% if playerLf1['rankPoints'] > playerLf2['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPoints'] < playerLf2['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf1['solo-fpp']['rankPoints']|round|int }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPointsMatch'] != null %}
+                                {% if playerLf1['rankPointsMatch'] > playerLf2['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPointsMatch'] < playerLf2['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['solo-fpp']['rankPointsMatch']|float)  }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['winRate'] != null %}
+                                {% if playerLf1['winRate'] > playerLf2['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['winRate'] < playerLf2['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf1['solo-fpp']['winRate']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['top10s'] != null %}
+                                {% if playerLf1['top10s'] > playerLf2['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['top10s'] < playerLf2['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf1['solo-fpp']['top10s'] }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+              {% endif %}
+              </div>
+
+                  <div class="col-sm-6">
+                    {% if player_two %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                                <th style="width: 2%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf2['solo-fpp']['kills'] }}</td>
+                                {% if playerLf2['solo-fpp']['kills'] > playerLf1['solo-fpp']['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['kills'] < playerLf1['solo-fpp']['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['solo-fpp']['KD']|float) }}</td>
+                                {% if playerLf2['solo-fpp']['KD'] > playerLf1['solo-fpp']['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['KD'] < playerLf1['solo-fpp']['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf2['solo-fpp']['wins'] }}</td>
+                                {% if playerLf2['solo-fpp']['wins'] > playerLf1['solo-fpp']['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['wins'] < playerLf1['solo-fpp']['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf2['solo-fpp']['roundsPlayed'] }}</td>
+                                {% if playerLf2['solo-fpp']['roundsPlayed'] > playerLf1['solo-fpp']['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['roundsPlayed'] < playerLf1['solo-fpp']['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf2['solo-fpp']['rankPoints']|round|int }}</td>
+                                {% if playerLf2['solo-fpp']['rankPoints'] > playerLf1['solo-fpp']['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['rankPoints'] < playerLf1['solo-fpp']['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['solo-fpp']['rankPointsMatch']|float)  }}</td>
+                                {% if playerLf2['solo-fpp']['rankPointsMatch'] > playerLf1['solo-fpp']['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['rankPointsMatch'] < playerLf1['solo-fpp']['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf2['solo-fpp']['winRate']|float) }}</td>
+                                {% if playerLf2['solo-fpp']['winRate'] > playerLf1['solo-fpp']['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['winRate'] < playerLf1['solo-fpp']['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf2['solo-fpp']['top10s'] }}</td>
+                                {% if playerLf2['solo-fpp']['top10s'] > playerLf1['solo-fpp']['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['solo-fpp']['top10s'] < playerLf1['solo-fpp']['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+                  </div>
+              </div>
+          </div>
+        </div>
     </div>
+    <!-- Accordion 2 Ende -->
+</div>
 
-<hr>
-<!--
-<table class="table table-borderless">
-  <thead>
-    <tr>
-      <th scope="col" style="text-align:center" style="width: 10%">Wert_links</th>
-      <th scope="col" style="text-align:center" style="width: 20%">{{ player_one }}</th>
-      <th scope="col" style="text-align:center" style="width: 40%">Kategorien</th>
-      <th scope="col" style="text-align:center" style="width: 20%">{{ player_two }}</th>
-      <th scope="col" style="text-align:center" style="width: 10%">Wert_rechts</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['rounds_played']}}</td>
-      <td class="table-danger">Mark</td>
-      <td style="text-align:center">Matches Played</td>
-      <td style="text-align:right"  class="table-primary">@mdo</td>
-      <td style="text-align:left">{{ player_two_solo_fpp_stats ['rounds_played']}}</td>
-    </tr>
-    <tr>
-      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['wins']}}</td>
-      <td class="table-danger">Mark</td>
-      <td style="text-align:center">Wins</td>
-      <td style="text-align:right" class="table-primary">@mdo</td>
-      <td style="text-align:left">{{ player_two_solo_fpp_stats ['wins']}}</td>
-    </tr>
-    <tr>
-      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['top_10s']}}</td>
-      <td class="table-danger">Mark</td>
-      <td style="text-align:center">Top 10s</td>
-      <td style="text-align:right" class="table-primary">@mdo</td>
-      <td style="text-align:left">{{ player_two_solo_fpp_stats ['top_10s']}}</td>
-    </tr>
-    <tr>
-      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['kills']}}</td>
-      <td class="table-danger">Mark</td>
-      <td style="text-align:center">Kills</td>
-      <td style="text-align:right" class="table-primary">@mdo</td>
-      <td style="text-align:left">{{ player_two_solo_fpp_stats ['kills']}}</td>
-    </tr>
-    <tr>
-      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['damage_dealt']}}</td>
-      <td class="table-danger">Mark</td>
-      <td style="text-align:center">Damage_dealt</td>
-      <td style="text-align:right" class="table-primary">@mdo</td>
-      <td style="text-align:left">{{ player_two_solo_fpp_stats ['damage_dealt']}}</td>
-    </tr>
-    <tr>
-      <td scope="col" style="text-align:right">{{ player_one_solo_fpp_stats ['longest_kill']}}</td>
-      <td class="table-danger">Mark</td>
-      <td style="text-align:center">Longest_kill</td>
-      <td style="text-align:right" class="table-primary">@mdo</td>
-      <td style="text-align:left">{{ player_two_solo_fpp_stats ['longest_kill']}}</td>
-    </tr>
-  </tbody>
-</table>
--->
+<!-- Accordion Duo TPP -->
+<div class="container-fluid">
+    <div id="accordionDuoTPP">
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionDuoTPP">
+          <div class="card-body">
 
+             <!-- Player One Tabelle -->
+             <div class="row">
+              <div class="col-sm-6">
+                {% if player_one %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%"></th>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              {% if playerLf1['kills'] != null %}
+                                {% if playerLf1['kills'] > playerLf2['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['kills'] < playerLf2['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf1 ['duo']['kills'] }}</td>
+                            </tr>
+                          <tr>
+                              {% if playerLf1['KD'] != null %}
+                                {% if playerLf1['KD'] > playerLf2['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['KD'] < playerLf2['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['duo']['KD']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['wins'] != null %}
+                                {% if playerLf1['wins'] > playerLf2['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['wins'] < playerLf2['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf1['duo']['wins'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['roundsPlayed'] != null %}
+                                {% if playerLf1['roundsPlayed'] > playerLf2['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['roundsPlayed'] < playerLf2['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf1['duo']['roundsPlayed'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPoints'] != null %}
+                                {% if playerLf1['rankPoints'] > playerLf2['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPoints'] < playerLf2['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf1['duo']['rankPoints']|round|int }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPointsMatch'] != null %}
+                                {% if playerLf1['rankPointsMatch'] > playerLf2['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPointsMatch'] < playerLf2['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['duo']['rankPointsMatch']|float)  }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['winRate'] != null %}
+                                {% if playerLf1['winRate'] > playerLf2['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['winRate'] < playerLf2['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf1['duo']['winRate']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['top10s'] != null %}
+                                {% if playerLf1['top10s'] > playerLf2['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['top10s'] < playerLf2['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf1['duo']['top10s'] }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+              {% endif %}
+              </div>
+
+                  <div class="col-sm-6">
+                    {% if player_two %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                                <th style="width: 2%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf2['duo']['kills'] }}</td>
+                                {% if playerLf2['duo']['kills'] > playerLf1['duo']['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['kills'] < playerLf1['duo']['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['duo']['KD']|float) }}</td>
+                                {% if playerLf2['duo']['KD'] > playerLf1['duo']['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['KD'] < playerLf1['duo']['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf2['duo']['wins'] }}</td>
+                                {% if playerLf2['duo']['wins'] > playerLf1['duo']['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['wins'] < playerLf1['duo']['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf2['duo']['roundsPlayed'] }}</td>
+                                {% if playerLf2['duo']['roundsPlayed'] > playerLf1['duo']['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['roundsPlayed'] < playerLf1['duo']['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf2['duo']['rankPoints']|round|int }}</td>
+                                {% if playerLf2['duo']['rankPoints'] > playerLf1['duo']['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['rankPoints'] < playerLf1['duo']['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['duo']['rankPointsMatch']|float)  }}</td>
+                                {% if playerLf2['duo']['rankPointsMatch'] > playerLf1['duo']['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['rankPointsMatch'] < playerLf1['duo']['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf2['duo']['winRate']|float) }}</td>
+                                {% if playerLf2['duo']['winRate'] > playerLf1['duo']['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['winRate'] < playerLf1['duo']['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf2['duo']['top10s'] }}</td>
+                                {% if playerLf2['duo']['top10s'] > playerLf1['duo']['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo']['top10s'] < playerLf1['duo']['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <!-- Accordion 3 Ende -->
+</div>
+
+<!-- Accordion Duo FPP -->
+<div class="container-fluid">
+    <div id="accordionDuoFPP">
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionDuoFPP">
+          <div class="card-body">
+
+             <!-- Player One Tabelle -->
+             <div class="row">
+              <div class="col-sm-6">
+                {% if player_one %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%"></th>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              {% if playerLf1['kills'] != null %}
+                                {% if playerLf1['kills'] > playerLf2['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['kills'] < playerLf2['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf1 ['duo-fpp']['kills'] }}</td>
+                            </tr>
+                          <tr>
+                              {% if playerLf1['KD'] != null %}
+                                {% if playerLf1['KD'] > playerLf2['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['KD'] < playerLf2['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['duo-fpp']['KD']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['wins'] != null %}
+                                {% if playerLf1['wins'] > playerLf2['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['wins'] < playerLf2['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf1['duo-fpp']['wins'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['roundsPlayed'] != null %}
+                                {% if playerLf1['roundsPlayed'] > playerLf2['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['roundsPlayed'] < playerLf2['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf1['duo-fpp']['roundsPlayed'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPoints'] != null %}
+                                {% if playerLf1['rankPoints'] > playerLf2['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPoints'] < playerLf2['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf1['duo-fpp']['rankPoints']|round|int }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPointsMatch'] != null %}
+                                {% if playerLf1['rankPointsMatch'] > playerLf2['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPointsMatch'] < playerLf2['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['duo-fpp']['rankPointsMatch']|float)  }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['winRate'] != null %}
+                                {% if playerLf1['winRate'] > playerLf2['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['winRate'] < playerLf2['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf1['duo-fpp']['winRate']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['top10s'] != null %}
+                                {% if playerLf1['top10s'] > playerLf2['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['top10s'] < playerLf2['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf1['duo-fpp']['top10s'] }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+              {% endif %}
+              </div>
+
+                  <div class="col-sm-6">
+                    {% if player_two %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                                <th style="width: 2%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf2['duo-fpp']['kills'] }}</td>
+                                {% if playerLf2['duo-fpp']['kills'] > playerLf1['duo-fpp']['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['kills'] < playerLf1['duo-fpp']['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['duo-fpp']['KD']|float) }}</td>
+                                {% if playerLf2['duo-fpp']['KD'] > playerLf1['duo-fpp']['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['KD'] < playerLf1['duo-fpp']['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf2['duo-fpp']['wins'] }}</td>
+                                {% if playerLf2['duo-fpp']['wins'] > playerLf1['duo-fpp']['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['wins'] < playerLf1['duo-fpp']['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf2['duo-fpp']['roundsPlayed'] }}</td>
+                                {% if playerLf2['duo-fpp']['roundsPlayed'] > playerLf1['duo-fpp']['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['roundsPlayed'] < playerLf1['duo-fpp']['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf2['duo-fpp']['rankPoints']|round|int }}</td>
+                                {% if playerLf2['duo-fpp']['rankPoints'] > playerLf1['duo-fpp']['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['rankPoints'] < playerLf1['duo-fpp']['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['duo-fpp']['rankPointsMatch']|float)  }}</td>
+                                {% if playerLf2['duo-fpp']['rankPointsMatch'] > playerLf1['duo-fpp']['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['rankPointsMatch'] < playerLf1['duo-fpp']['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf2['duo-fpp']['winRate']|float) }}</td>
+                                {% if playerLf2['duo-fpp']['winRate'] > playerLf1['duo-fpp']['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['winRate'] < playerLf1['duo-fpp']['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf2['duo-fpp']['top10s'] }}</td>
+                                {% if playerLf2['duo-fpp']['top10s'] > playerLf1['duo-fpp']['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['duo-fpp']['top10s'] < playerLf1['duo-fpp']['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <!-- Accordion 4 Ende -->
+</div>
+
+
+<!-- Accordion Squad TPP -->
+<div class="container-fluid">
+    <div id="accordionSquadTPP">
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSquadTPP">
+          <div class="card-body">
+
+             <!-- Player One Tabelle -->
+             <div class="row">
+              <div class="col-sm-6">
+                {% if player_one %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%"></th>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              {% if playerLf1['kills'] != null %}
+                                {% if playerLf1['kills'] > playerLf2['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['kills'] < playerLf2['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf1 ['squad']['kills'] }}</td>
+                            </tr>
+                          <tr>
+                              {% if playerLf1['KD'] != null %}
+                                {% if playerLf1['KD'] > playerLf2['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['KD'] < playerLf2['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['squad']['KD']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['wins'] != null %}
+                                {% if playerLf1['wins'] > playerLf2['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['wins'] < playerLf2['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf1['squad']['wins'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['roundsPlayed'] != null %}
+                                {% if playerLf1['roundsPlayed'] > playerLf2['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['roundsPlayed'] < playerLf2['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf1['squad']['roundsPlayed'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPoints'] != null %}
+                                {% if playerLf1['rankPoints'] > playerLf2['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPoints'] < playerLf2['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf1['squad']['rankPoints']|round|int }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPointsMatch'] != null %}
+                                {% if playerLf1['rankPointsMatch'] > playerLf2['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPointsMatch'] < playerLf2['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['squad']['rankPointsMatch']|float)  }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['winRate'] != null %}
+                                {% if playerLf1['winRate'] > playerLf2['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['winRate'] < playerLf2['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf1['squad']['winRate']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['top10s'] != null %}
+                                {% if playerLf1['top10s'] > playerLf2['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['top10s'] < playerLf2['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf1['squad']['top10s'] }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+              {% endif %}
+              </div>
+
+                  <div class="col-sm-6">
+                    {% if player_two %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                                <th style="width: 2%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf2['squad']['kills'] }}</td>
+                                {% if playerLf2['squad']['kills'] > playerLf1['squad']['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['kills'] < playerLf1['squad']['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['squad']['KD']|float) }}</td>
+                                {% if playerLf2['squad']['KD'] > playerLf1['squad']['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['KD'] < playerLf1['squad']['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf2['squad']['wins'] }}</td>
+                                {% if playerLf2['squad']['wins'] > playerLf1['squad']['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['wins'] < playerLf1['squad']['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf2['squad']['roundsPlayed'] }}</td>
+                                {% if playerLf2['squad']['roundsPlayed'] > playerLf1['squad']['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['roundsPlayed'] < playerLf1['squad']['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf2['squad']['rankPoints']|round|int }}</td>
+                                {% if playerLf2['squad']['rankPoints'] > playerLf1['squad']['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['rankPoints'] < playerLf1['squad']['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['squad']['rankPointsMatch']|float)  }}</td>
+                                {% if playerLf2['squad']['rankPointsMatch'] > playerLf1['squad']['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['rankPointsMatch'] < playerLf1['squad']['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf2['squad']['winRate']|float) }}</td>
+                                {% if playerLf2['squad']['winRate'] > playerLf1['squad']['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['winRate'] < playerLf1['squad']['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf2['squad']['top10s'] }}</td>
+                                {% if playerLf2['squad']['top10s'] > playerLf1['squad']['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad']['top10s'] < playerLf1['squad']['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <!-- Accordion 5 Ende -->
+</div>
+
+
+<!-- Accordion Squad FPP -->
+<div class="container-fluid">
+    <div id="accordionSquadFPP">
+        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionSquadFPP">
+          <div class="card-body">
+
+             <!-- Player One Tabelle -->
+             <div class="row">
+              <div class="col-sm-6">
+                {% if player_one %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%"></th>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              {% if playerLf1['kills'] != null %}
+                                {% if playerLf1['kills'] > playerLf2['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['kills'] < playerLf2['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf1 ['squad-fpp']['kills'] }}</td>
+                            </tr>
+                          <tr>
+                              {% if playerLf1['KD'] != null %}
+                                {% if playerLf1['KD'] > playerLf2['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['KD'] < playerLf2['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['squad-fpp']['KD']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['wins'] != null %}
+                                {% if playerLf1['wins'] > playerLf2['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['wins'] < playerLf2['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf1['squad-fpp']['wins'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['roundsPlayed'] != null %}
+                                {% if playerLf1['roundsPlayed'] > playerLf2['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['roundsPlayed'] < playerLf2['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf1['squad-fpp']['roundsPlayed'] }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPoints'] != null %}
+                                {% if playerLf1['rankPoints'] > playerLf2['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPoints'] < playerLf2['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf1['squad-fpp']['rankPoints']|round|int }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['rankPointsMatch'] != null %}
+                                {% if playerLf1['rankPointsMatch'] > playerLf2['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['rankPointsMatch'] < playerLf2['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf1['squad-fpp']['rankPointsMatch']|float)  }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['winRate'] != null %}
+                                {% if playerLf1['winRate'] > playerLf2['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['winRate'] < playerLf2['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf1['squad-fpp']['winRate']|float) }}</td>
+                            </tr>
+                            <tr>
+                              {% if playerLf1['top10s'] != null %}
+                                {% if playerLf1['top10s'] > playerLf2['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf1['top10s'] < playerLf2['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                              {% else %}
+                               <td class="table-dark"></td>
+                              {% endif %}
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf1['squad-fpp']['top10s'] }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+              {% endif %}
+              </div>
+
+                  <div class="col-sm-6">
+                    {% if player_two %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 70%"></th>
+                                <th style="width: 28%"></th>
+                                <th style="width: 2%"></th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                              <td><h5>Total Kills</h5></td>
+                              <td>{{ playerLf2['squad-fpp']['kills'] }}</td>
+                                {% if playerLf2['squad-fpp']['kills'] > playerLf1['squad-fpp']['kills'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['kills'] < playerLf1['squad-fpp']['kills'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall KD</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['squad-fpp']['KD']|float) }}</td>
+                                {% if playerLf2['squad-fpp']['KD'] > playerLf1['squad-fpp']['KD'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['KD'] < playerLf1['squad-fpp']['KD'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Wins</h5></td>
+                              <td>{{ playerLf2['squad-fpp']['wins'] }}</td>
+                                {% if playerLf2['squad-fpp']['wins'] > playerLf1['squad-fpp']['wins'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['wins'] < playerLf1['squad-fpp']['wins'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Total Matches</h5></td>
+                              <td>{{ playerLf2['squad-fpp']['roundsPlayed'] }}</td>
+                                {% if playerLf2['squad-fpp']['roundsPlayed'] > playerLf1['squad-fpp']['roundsPlayed'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['roundsPlayed'] < playerLf1['squad-fpp']['roundsPlayed'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points</h5></td>
+                              <td>{{ playerLf2['squad-fpp']['rankPoints']|round|int }}</td>
+                                {% if playerLf2['squad-fpp']['rankPoints'] > playerLf1['squad-fpp']['rankPoints'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['rankPoints'] < playerLf1['squad-fpp']['rankPoints'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Rank Points / Match</h5></td>
+                              <td>{{ '%0.2f' | format(playerLf2['squad-fpp']['rankPointsMatch']|float)  }}</td>
+                                {% if playerLf2['squad-fpp']['rankPointsMatch'] > playerLf1['squad-fpp']['rankPointsMatch'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['rankPointsMatch'] < playerLf1['squad-fpp']['rankPointsMatch'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Overall Winrate</h5></td>
+                              <td>{{ '%0.2f' | format(100 *playerLf2['squad-fpp']['winRate']|float) }}</td>
+                                {% if playerLf2['squad-fpp']['winRate'] > playerLf1['squad-fpp']['winRate'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['winRate'] < playerLf1['squad-fpp']['winRate'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                              <td><h5>Top 10 Placements</h5></td>
+                              <td>{{ playerLf2['squad-fpp']['top10s'] }}</td>
+                                {% if playerLf2['squad-fpp']['top10s'] > playerLf1['squad-fpp']['top10s'] %}
+                                <td class="bg-success"></td>
+                                {% elif playerLf2['squad-fpp']['top10s'] < playerLf1['squad-fpp']['top10s'] %}
+                                <td class="bg-danger"></td>
+                                {% else %}
+                                <td class="table-dark"></td>
+                                {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <!-- Accordion 6 Ende -->
+</div>
 
 {% endblock %}
