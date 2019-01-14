@@ -48,6 +48,18 @@ def Player_Lifetime_Stats(playercore):
 
     return player_Lfstats
 
+# Gets all the Liftetime data with the Player Core
+def Player_Lifetime_Stats_all(playercore):
+    playercoredata = playercore["data"]
+    for ids in playercoredata:
+        playerid = ids["id"]
+    api_key = Apikey()
+    pubgcore = PUBGCore(api_key, "steam")
+    player_Lfstats =[]
+    player_Lfstats = pubgcore.lifetime(playerid)
+
+    return player_Lfstats
+
 # Gets all Match Stats with the player core data
 def Player_Matches_Stats(playercore):
     api_key = Apikey()
@@ -61,15 +73,17 @@ def Player_Matches_Stats(playercore):
     return playerMatches
 
 # Gets only the first five matches from a player 
-def Player_Matches_Stats_firstfive(playercore):
+def Player_Matches_Stats_firstten(playercore):
     api_key = Apikey()
     pubgcore = PUBGCore(api_key, "steam")
     playercoredata = playercore["data"]
     playerMatches = []
     for data in playercoredata:
         relationships = data["relationships"]
-        for matches in relationships["matches"]["data"]:
-            playerMatches.append(pubgcore.match(matches["id"]))            
+        for idx, matches in enumerate(relationships["matches"]["data"]):
+            playerMatches.append(pubgcore.match(matches["id"])) 
+            if (idx+1) % 10 == 0:
+                break           
     return playerMatches
 
 def Player_Stats_Solo(playername):

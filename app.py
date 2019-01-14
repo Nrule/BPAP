@@ -107,15 +107,15 @@ def dashboard():
         playerLf = []
         playerLf = Player_Lifetime_Stats(playercore)
         modes = playerLf.keys()
-        #playerMatches = Player_Matches_Stats(playercore)
+        playerMatches = Player_Matches_Stats_firstten(playercore)
     else:
         flash("You haven't set a player in your settings! Go to settings to change your player", "danger")
 
     return render_template('dashboard.html', name=current_user.username,
     pubgusername=current_user.pubgusername,
     playerLf = playerLf,
-    modes = modes
-    #playerMatches = playerMatches
+    modes = modes,
+    playerMatches = playerMatches
     )
 
 @app.route('/settings', methods=['GET', 'POST'])

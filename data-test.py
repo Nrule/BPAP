@@ -7,23 +7,23 @@ import json
 #with open("json/data_file.json", "w") as write_file:
 #   json.dump(shroud, write_file, indent=2)
 
-whitemickey = Player_Core("White-Mickey")
-whitemickeylf = Player_Lifetime_Stats(whitemickey)
-modes = whitemickeylf.keys()
 
-for mode in modes:
-   if whitemickeylf[mode]["losses"] != 0:
-      whitemickeylf[mode]["KD"] = whitemickeylf[mode]["kills"] / whitemickeylf[mode]["losses"]
-   else:
-      whitemickeylf[mode]["KD"] = ''
+playername = "P4wnyhof"
+ponyhof = Player_Core(playername)
 
-   if whitemickeylf[mode]["roundsPlayed"] != 0:
-      whitemickeylf[mode]["rankPointsMatch"] = whitemickeylf[mode]["rankPoints"] / whitemickeylf[mode]["roundsPlayed"]
-      whitemickeylf[mode]["winRate"] = whitemickeylf[mode]["wins"] / whitemickeylf[mode]["roundsPlayed"] * 100
-   else:
-      whitemickeylf[mode]["rankPointsMatch"] = ''
-      whitemickeylf[mode]["winRate"] = ''
-print (whitemickeylf)
+matches = Player_Matches_Stats_firstten(ponyhof)
+print (matches)
+
+for match in matches:
+   for participant in match["included"]:
+      if participant["type"] == "participant":
+         if participant["attributes"]["stats"]["name"] == playername:
+            print(participant["attributes"]["stats"])
+
+         for participantstats in participant["attributes"]:
+         #if participantstats["name"] == "P4wnyhof":
+            print (participant)
+
 
 # Api-Key and PUBG Core
 api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5OGNiYzI3MC1iYTlkLTAxMzYtNjg3MS02YjU5NWYzNGI3NjciLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQwNDgzNDc3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImJwYXAifQ.hr--q6zWIXB6Fkba3XGhgMaQUubCo9vn1h1YgMm1dVk"
