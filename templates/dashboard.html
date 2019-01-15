@@ -8,7 +8,7 @@
 
 <div class="btn-group" role="group" aria-label="Basic example">
   <div class="btn-group" role="group">
-    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle btn-warning" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
       Lifetime Stats
     </button>
@@ -22,7 +22,7 @@
     </div>
   </div>
   <!--button type="button"  class="btn btn-secondary" data-toggle="collapse" data-target="#lfstats" >Lifetime Stats</button-->
-  <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#matchstats">Matches</button>
+  <button type="button" class="btn btn-secondary btn-warning" data-toggle="collapse" data-target="#matchstats">Matches</button>
 </div>
 
 <!-- Segment for creating the lifetime data of the pubg user of the user -->
@@ -45,8 +45,9 @@
   {% endif %}
   <!-- Table for the data of the mode -->
   <div class="collapse{{ show }}" id="{{ mode }}" data-parent="#collapses">
+      <hr>
   <div class="card">
-    <div class="card-header">
+    <div class="card-header bg-dark text-white">
       <h4>{{ headername }}</h4>
     </div>
     <div class="card-body">
@@ -102,7 +103,6 @@
 
 
   <div class="collapse" id="matchstats" data-parent="#collapses">
-    <div class="container">
     <hr>
     <h2>Match Statistiken</h2>
     <hr>
@@ -120,10 +120,8 @@
               </button>
             </div>
             <div class="col-md-3">Match Mode: {{ match["data"]["attributes"]["gameMode"] }}</div>
-            <div class="col-md-3">Map: {{ match["data"]["attributes"]["mapName"] }}</div>
-
-
-          </div>
+            <div class="col-md-2">Map: {{ match["data"]["attributes"]["mapName"] }}</div>
+        </div>
         </div>
         {% for participant in match["included"] %}
           {% if participant["type"] == "participant" %}
@@ -131,7 +129,7 @@
             <div id="collapse{{ match["data"]["id"] }}" class="collapse" aria-labelledby="heading{{ match["data"]["id"] }}" data-parent="#accordionMatch">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-8">
                     <div class="col-md-3 col-sm-4">
                       <h4>{{ participant["attributes"]["stats"]["winPlace"] }}</h4>
                       <p>Match Place</p>
@@ -150,7 +148,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     {% if match["data"]["attributes"]["mapName"] == "Erangel_Main" %}
                       <img src="static/Erangel_Main_Low_Res.jpg" style="width:100%">
                     {% elif match["data"]["attributes"]["mapName"] == "DihorOtok_Main" %}
@@ -172,21 +170,9 @@
       {% endfor %}
     {% endfor %}
     </div>
-  </div>
 </div>
 </div>
 
-
-<!-- CSS für Panel -->
-<style>
-  .panel-heading .fa-chevron:after {
-    content: "\f078";
-  }
-
-  .panel-heading.collapsed .fa-chevron:after {
-    content: "\f054";
-  }
-</style>
 {% endblock %}
 
 {% block script %}

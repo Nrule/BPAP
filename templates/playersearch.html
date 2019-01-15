@@ -19,7 +19,7 @@
                     <input class="form-control" name="playerName" type="text" placeholder="Player Name">
                 </p>
                 <p class="control">
-                    <button class="btn btn-outline-primary">Search</button>
+                    <button class="btn bg-warning">Search</button>
                 </p>
             </div>
         </form>
@@ -42,7 +42,7 @@
       {% set headername = 'Squad FPP'%}
     {% endif %}
 <div class="card">
-<div class="card-header">
+<div class="card-header bg-dark text-white">
   <h4>{{ headername }}</h4>
 </div>
   <div class="card-body">
@@ -80,36 +80,38 @@
         <p>Top 10 Placements</p>
       </div>
     </div>
-    <div class="panel">
-        <div class="panel-heading" data-toggle="collapse" data-target="#collapseOrderItems{{ mode }}"><i class="fa fa-chevron fa-fw" data-toggle="collapse" data-target="#collapseOrderItems{{ mode }}"></i> Grafiken</div>
-    </div>
-    <div class="collapse" id="collapseOrderItems{{ mode }}">
-
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-6">
-                <canvas id="radar{{ mode }}"></canvas>
-            </div>
-            <div class="col-md-6">
-                <canvas id="polarAreaMatchType{{ mode }}"></canvas>
-            </div>
+    <div class="card">
+        <div class="card-header" id="heading{{ mode }}">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ mode }}">
+              Grafiken {{ headername }} 
+            </button>
         </div>
+    <div class="collapse" id="collapse{{ mode }}">
+      <div class="card-body">
+          <div class="row">
+              <div class="card border-light col-md-6">
+                  <canvas id="radar{{ mode }}"></canvas>
+              </div>
+              <div class="card border-light col-md-6">
+                  <canvas id="polarAreaMatchType{{ mode }}"></canvas>
+              </div>
+          </div>
+      </div>
     </div>
     </div>
   </div>
 </div>
-{% endfor %}
 
-
-<!-- CSS für Panel -->
 <style>
-.panel-heading .fa-chevron:after {
+.card-header .fa-chevron:after {
     content: "\f078";
 }
-.panel-heading.collapsed .fa-chevron:after {
+.card-header.collapsed .fa-chevron:after {
     content: "\f054";
 }
+}
 </style>
+{% endfor %}
 
 {% endblock %}
 
