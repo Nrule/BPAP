@@ -145,13 +145,20 @@ def settings():
 @app.route('/comparison', methods=['GET', 'POST'])
 @login_required
 def comparison1():
+    #player1
     player_one = None
-    player_two = None
-    playerLf1 = []
-    playerLf2 = []
+    player_one_Lf = {}
 
+    #player2
+    player_two = None
+    player_two_Lf = {}
+
+    #Modes für Template /comparison
+    modes_comparison = {}
+
+    #Method for player 1
     if request.method == 'POST':
-        player_one = request.form.get('playerOneName1')
+        player_one = request.form.get('player1')
 
         if player_one:
             player_two = request.form.get('playerName1')
@@ -159,18 +166,21 @@ def comparison1():
             player_one = request.form.get('playerName1')
 
         playercore = Player_Core(player_one)
-        playerLf1 = Player_Lifetime_Stats(playercore)
+        player_one_Lf = Player_Lifetime_Stats(playercore)
+        modes_comparison = player_one_Lf.keys()
 
         if player_two:
             playercore = Player_Core(player_two)
-            playerLf2 = Player_Lifetime_Stats(playercore)
+            player_two_Lf = Player_Lifetime_Stats(playercore)
+            modes_comparison = player_two_Lf.keys()
+
 
     image_file1 = url_for('static', filename='player-default.svg')
     image_file2 = url_for('static', filename='player-default.svg')
 
-    return render_template('comparison.html', player_one=player_one, player_two=player_two,
-                           playerLf1 = playerLf1, playerLf2 = playerLf2, image_file1=image_file1,
-                           image_file2=image_file2, name=current_user.username)
+    return render_template('comparison.html', player_one=player_one, player_one_Lf=player_one_Lf,
+                           modes_comparison=modes_comparison, player_two=player_two, player_two_Lf=player_two_Lf,
+                           image_file1=image_file1, image_file2=image_file2, name=current_user.username)
 
 @app.route('/playersearch', methods=['GET', 'POST'])
 @login_required
