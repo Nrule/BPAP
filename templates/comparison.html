@@ -183,7 +183,7 @@
                                   <td>{{ '%0.2f' | format(player_one_Lf[mode]['rankPointsMatch']|float) }}</td>
                                 </tr>
                                 <tr>
-                                  <td><h5>Overall Winrate</h5></td>
+                                  <td><h5>Overall Winrate %</h5></td>
                                   <td>{{ '%0.2f' | format(100 *player_one_Lf[mode]['winRate']|float) }}</td>
                                 </tr>
                                 <tr>
@@ -202,72 +202,72 @@
                         <table class="table">
                         <tbody>
                             <tr>
-                            {% if player_two_Lf[mode]['kills'] > player_one_Lf[mode]['kills'] %}
+                            {% if player_two_Lf[mode]['kills']|float > player_one_Lf[mode]['kills']|float %}
                             <td class="centered"><img src="/static/less.svg " height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['kills'] < player_one_Lf[mode]['kills'] %}
+                            {% elif player_two_Lf[mode]['kills']|float < player_one_Lf[mode]['kills']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['KD'] > player_one_Lf[mode]['KD'] %}
+                            {% if player_one_Lf[mode]['KD']|float > player_one_Lf[mode]['KD']|float  %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['KD'] < player_one_Lf[mode]['KD'] %}
+                            {% elif player_one_Lf[mode]['KD']|float < player_one_Lf[mode]['KD']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['wins'] > player_one_Lf[mode]['wins'] %}
+                            {% if player_two_Lf[mode]['wins']|float > player_one_Lf[mode]['wins']|float %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['wins'] < player_one_Lf[mode]['wins'] %}
+                            {% elif player_two_Lf[mode]['wins']|float < player_one_Lf[mode]['wins']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['roundsPlayed'] > player_one_Lf[mode]['roundsPlayed'] %}
+                            {% if player_two_Lf[mode]['roundsPlayed']|float > player_one_Lf[mode]['roundsPlayed']|float %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['roundsPlayed'] < player_one_Lf[mode]['roundsPlayed'] %}
+                            {% elif player_two_Lf[mode]['roundsPlayed']|float < player_one_Lf[mode]['roundsPlayed']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['rankPoints'] > player_one_Lf[mode]['rankPoints'] %}
+                            {% if player_two_Lf[mode]['rankPoints']|float > player_one_Lf[mode]['rankPoints']|float %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['rankPoints'] < player_one_Lf[mode]['rankPoints'] %}
+                            {% elif player_two_Lf[mode]['rankPoints']|float < player_one_Lf[mode]['rankPoints']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['rankPointsMatch'] > player_one_Lf[mode]['rankPointsMatch'] %}
+                            {% if player_two_Lf[mode]['rankPointsMatch']|float > player_one_Lf[mode]['rankPointsMatch']|float %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['rankPointsMatch'] < player_one_Lf[mode]['rankPointsMatch'] %}
+                            {% elif player_two_Lf[mode]['rankPointsMatch']|float < player_one_Lf[mode]['rankPointsMatch']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['winRate'] > player_one_Lf[mode]['winRate'] %}
+                            {% if player_two_Lf[mode]['winRate']|float > player_one_Lf[mode]['winRate']|float %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['winRate'] < player_one_Lf[mode]['winRate'] %}
+                            {% elif player_two_Lf[mode]['winRate']|float < player_one_Lf[mode]['winRate']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>
                             {% endif %}
                             </tr>
                             <tr>
-                            {% if player_two_Lf[mode]['top10s'] > player_one_Lf[mode]['top10s'] %}
+                            {% if player_two_Lf[mode]['top10s']|float > player_one_Lf[mode]['top10s']|float %}
                             <td class="centered"><img src="/static/less.svg" height="32" width="32"></td>
-                            {% elif player_two_Lf[mode]['top10s'] < player_one_Lf[mode]['top10s'] %}
+                            {% elif player_two_Lf[mode]['top10s']|float < player_one_Lf[mode]['top10s']|float %}
                             <td class="centered"><img src="/static/greater.svg" height="32" width="32"></td>
                             {% else %}
                             <td class="centered"><img src="/static/equal.svg" height="32" width="32"></td>

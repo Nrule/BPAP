@@ -286,18 +286,18 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Error Handling für 404:(Kann später auch in Errors.py ausgelagert werden)
-#@app.errorhandler(404)
+@app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
 
 # Error Handling für 500:
-#@app.errorhandler(500)
+@app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
 # Error Handling bei HTTP-Exceptions (API)
-#@app.errorhandler(Exception)
+@app.errorhandler(Exception)
 def http_error_handler(error):
     return render_template('400.html')
 
